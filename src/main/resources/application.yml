@@ -7,3 +7,14 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/learn-jvm
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    default-schema: public
+
+logging:
+  level:
+    org:
+      springframework: info

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>learn-jvm</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div>
+        <!--/*@thymesVar id="login" type="com.kamegatze.learnjvm.model.authentication.Login"*/-->
+        <form action="#" th:action="@{/authentication/processing}" th:object="${login}" method="post">
+            <label>
+                <div>
+                    Имя пользователя:
+                </div>
+                <input type="text" th:field="*{username}">
+            </label>
+            <label>
+                <div>
+                    Пароль:
+                </div>
+                <input type="password" th:field="*{password}">
+            </label>
+            <br>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</body>
+</html>
