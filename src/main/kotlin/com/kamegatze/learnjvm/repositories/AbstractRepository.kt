@@ -4,7 +4,7 @@ import java.util.Optional
 
 interface AbstractRepository<T, ID> {
 
-    fun findById(id: ID): Optional<T>
+    fun findById(id: ID): T?
 
     fun findAll(): Collection<T>
 

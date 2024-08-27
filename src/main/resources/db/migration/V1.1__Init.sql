@@ -9,6 +9,7 @@ create table if not exists users(
     last_name text not null,
     first_name text not null,
     login text unique not null,
+    password text not null,
     created_at timestamp not null,
     updated_at timestamp,
     last_authorization timestamp,
@@ -37,6 +38,7 @@ create table if not exists posts_table_of_contents(
     id uuid primary key,
     posts_id uuid not null,
     table_of_contents_id uuid not null,
+    ordering int not null,
     constraint fk_posts_table_of_contents_on_post foreign key(posts_id) references posts(id),
     constraint fk_posts_table_of_contents_on_table_of_contents foreign key(table_of_contents_id) references table_of_contents(id)
 );
