@@ -11,7 +11,6 @@ import java.util.*
 @Repository
 class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val usersRowMapper: UsersRowMapper) : UsersRepository {
 
-
     override fun findById(id: UUID): Users? {
         return jdbcTemplate.queryForObject("select * from users where id = ?", usersRowMapper, id)
 
@@ -28,35 +27,35 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
     }
 
     override fun save(entity: Users): Users {
-        val isNotExists = findById(entity.id) == null
-        if (isNotExists) {
-            jdbcTemplate.update(
-                """insert into users (id, last_name, first_name, login, password, created_at, updated_at, last_authorization, icon_id)
-                | values (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """.trimMargin(), entity.id, entity.lastName, entity.firstName, entity.login, entity.password, Timestamp.from(entity.createdAt),
-                Timestamp.from(entity.updatedAt), Timestamp.from(entity.lastAuthorization), entity.iconId
-            )
-            return findById(entity.id)!!
-        }
-        throw IllegalArgumentException("User with id ${entity.id} already exists")
+        val createdAt = if (entity.createdAt != null) Timestamp.from(entity.createdAt) else null
+        val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
+        val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
+
+        jdbcTemplate.update(
+            """insert into users (id, last_name, first_name, login, password, created_at, updated_at, last_authorization, icon_id)
+            | values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """.trimMargin(), entity.id, entity.lastName, entity.firstName, entity.login, entity.password, createdAt,
+            updatedAt, lastAuthorization, entity.iconId
+        )
+        return findById(entity.id!!)!!
     }
 
     override fun update(entity: Users): Users {
-        val isExists = findById(entity.id) != null
-        if (isExists) {
-            jdbcTemplate.update("""
-                update users set last_name = ?, first_name = ?, login = ?, password = ?, created_at = ?,
-                updated_at = ?, last_authorization = ?, icon_id = ? 
-                where id = ?
-            """.trimIndent(), entity.lastName, entity.firstName, entity.login, entity.password, Timestamp.from(entity.createdAt),
-                Timestamp.from(entity.updatedAt), Timestamp.from(entity.lastAuthorization), entity.iconId, entity.id)
-            return findById(entity.id)!!
-        }
-        throw IllegalArgumentException("User with id ${entity.id} not exists")
+        val createdAt = if (entity.createdAt != null) Timestamp.from(entity.createdAt) else null
+        val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
+        val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
+
+        jdbcTemplate.update("""
+            update users set last_name = ?, first_name = ?, login = ?, password = ?, created_at = ?,
+            updated_at = ?, last_authorization = ?, icon_id = ? 
+            where id = ?
+        """.trimIndent(), entity.lastName, entity.firstName, entity.login, entity.password, createdAt,
+            updatedAt, lastAuthorization, entity.iconId, entity.id)
+        return findById(entity.id!!)!!
     }
 
     override fun delete(id: UUID) {
-        jdbcTemplate.update("""delete from users where id = ?""", id)
+        jdbcTemplate.update("delete from users where id = ?", id)
     }
 
     override fun findByLogin(login: String): Users? {

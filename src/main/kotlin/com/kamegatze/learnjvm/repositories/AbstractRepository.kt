@@ -1,7 +1,5 @@
 package com.kamegatze.learnjvm.repositories
 
-import java.util.Optional
-
 interface AbstractRepository<T, ID> {
 
     fun findById(id: ID): T?

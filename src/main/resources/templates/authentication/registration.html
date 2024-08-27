@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+    <div>
+        <!--/*@thymesVar id="login" type="com.kamegatze.learnjvm.model.db.users.User"*/-->
+        <form action="#" th:action="@{/authentication/register}"
+              th:object="${user}" method="post">
+            <div>
+                <div>
+                    <label>Фамилие:</label>
+                </div>
+                <input type="text" th:field="*{lastName}"/>
+            </div>
+            <div>
+                <div>
+                    <label>Имя:</label>
+                </div>
+                <input type="text" th:field="*{firstName}"/>
+            </div>
+            <div>
+                <div>
+                    <label>Логин:</label>
+                </div>
+                <input type="text" th:field="*{login}"/>
+            </div>
+            <div>
+                <div>
+                    <label>Пароль:</label>
+                </div>
+                <input type="text" th:field="*{password}"/>
+            </div>
+            <div>
+                <button type="submit">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
