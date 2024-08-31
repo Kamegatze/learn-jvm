@@ -25,7 +25,7 @@ class AuthenticationController(private val authenticationService: Authentication
     @GetMapping("/register")
     fun handlingRegisterPage(model: Model): String {
         model.addAttribute("user", Users(null, "", "", "", "",
-            null, null, null, null))
+            null, null, null, null, null))
         return "authentication/registration"
     }
 
