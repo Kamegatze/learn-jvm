@@ -31,13 +31,15 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
         val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
         val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
 
+        val id = UUID.randomUUID()
+
         jdbcTemplate.update(
-            """insert into users (id, last_name, first_name, login, password, created_at, updated_at, last_authorization, icon_id)
-            | values (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """.trimMargin(), entity.id, entity.lastName, entity.firstName, entity.login, entity.password, createdAt,
-            updatedAt, lastAuthorization, entity.iconId
+            """insert into users (id, last_name, first_name, login, password, created_at, updated_at, last_authorization, icon_id, role_id)
+            | values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """.trimMargin(), id, entity.lastName, entity.firstName, entity.login, entity.password, createdAt,
+            updatedAt, lastAuthorization, entity.iconId, entity.roleId
         )
-        return findById(entity.id!!)!!
+        return findById(id)!!
     }
 
     override fun update(entity: Users): Users {
@@ -47,10 +49,10 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
 
         jdbcTemplate.update("""
             update users set last_name = ?, first_name = ?, login = ?, password = ?, created_at = ?,
-            updated_at = ?, last_authorization = ?, icon_id = ? 
+            updated_at = ?, last_authorization = ?, icon_id = ?, role_id = ?
             where id = ?
         """.trimIndent(), entity.lastName, entity.firstName, entity.login, entity.password, createdAt,
-            updatedAt, lastAuthorization, entity.iconId, entity.id)
+            updatedAt, lastAuthorization, entity.iconId, entity.roleId, entity.id)
         return findById(entity.id!!)!!
     }
 
