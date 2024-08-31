@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  test-database:
+    container_name: learn-database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=learn-jvm
+    image: postgres:16.4-bullseye
+    ports:
+      - '5432:5432'
+    volumes:
+      - learn-jvm:/var/lib/postgresql/learn-jvm
+volumes:
+  learn-jvm:
