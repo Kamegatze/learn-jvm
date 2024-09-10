@@ -1,42 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" th:href="@{./registration.css}">
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
 <body>
-    <div>
-        <!--/*@thymesVar id="login" type="com.kamegatze.learnjvm.model.db.users.User"*/-->
+    <div class="container">
+        <div></div>
+        <!--/*@thymesVar id="login" type="com.kamegatze.learnjvm.model.registration.Registration"*/-->
         <form action="#" th:action="@{/authentication/register}"
-              th:object="${user}" method="post">
+              th:object="${registration}" method="post">
             <div>
                 <div>
-                    <label>Фамилие:</label>
+                    <label>Фамилия:</label>
                 </div>
                 <input type="text" th:field="*{lastName}"/>
+                <span th:if="${#fields.hasErrors('lastName')}"
+                      th:errors="*{lastName}"></span>
             </div>
             <div>
                 <div>
                     <label>Имя:</label>
                 </div>
                 <input type="text" th:field="*{firstName}"/>
+                <span th:if="${#fields.hasErrors('firstName')}"
+                      th:errors="*{firstName}"></span>
             </div>
             <div>
                 <div>
                     <label>Логин:</label>
                 </div>
                 <input type="text" th:field="*{login}"/>
+                <span th:if="${#fields.hasErrors('login')}"
+                      th:errors="*{login}"></span>
             </div>
             <div>
                 <div>
                     <label>Пароль:</label>
                 </div>
-                <input type="text" th:field="*{password}"/>
+                <input type="password" th:field="*{password}"/>
+                <span th:if="${#fields.hasErrors('password')}"
+                      th:errors="*{password}"></span>
+            </div>
+            <div>
+                <div>
+                    <label>Повторите пароль:</label>
+                </div>
+                <input type="password" th:field="*{retryPassword}"/>
+                <span th:if="${#fields.hasErrors('retryPassword')}"
+                      th:errors="*{retryPassword}"></span>
+                <span th:if="${errorRetryPassword}" th:text="${errorRetryPassword}"></span>
             </div>
             <div>
                 <button type="submit">Зарегистрироваться</button>
             </div>
         </form>
+        <div></div>
     </div>
 </body>
 </html>
