@@ -8,8 +8,10 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 @Configuration
+@EnableWebMvc
 class Config(private val passwordEncoder: PasswordEncoder, private val userDetailsService: UserDetailsService) {
 
     private fun authenticationProvider(): DaoAuthenticationProvider = DaoAuthenticationProvider(passwordEncoder)
@@ -20,7 +22,7 @@ class Config(private val passwordEncoder: PasswordEncoder, private val userDetai
         http
             .sessionManagement{it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)}
             .authorizeHttpRequests {
-                it.requestMatchers("/posts/**", "/authentication/**", "/home/**", "/home").permitAll()
+                it.requestMatchers("/posts/**", "/authentication/**", "/home/**", "/home", "/static/**").permitAll()
                 .anyRequest().authenticated()
             }
             .authenticationProvider(authenticationProvider())

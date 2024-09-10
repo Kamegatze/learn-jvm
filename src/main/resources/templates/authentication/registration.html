@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{./registration.css}">
+    <link th:href="@{/static/css/authentication/registration.css}" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
 <body>
     <div class="container">
-        <div></div>
-        <!--/*@thymesVar id="login" type="com.kamegatze.learnjvm.model.registration.Registration"*/-->
-        <form action="#" th:action="@{/authentication/register}"
+        <!--/*@thymesVar id="registration" type="com.kamegatze.learnjvm.model.registration.Registration"*/-->
+        <form class="child" action="#" th:action="@{/authentication/register}"
               th:object="${registration}" method="post">
             <div>
                 <div>
@@ -50,13 +49,13 @@
                 <input type="password" th:field="*{retryPassword}"/>
                 <span th:if="${#fields.hasErrors('retryPassword')}"
                       th:errors="*{retryPassword}"></span>
+                <!--/*@thymesVar id="errorRetryPassword" type="java.lang.String"*/-->
                 <span th:if="${errorRetryPassword}" th:text="${errorRetryPassword}"></span>
             </div>
             <div>
                 <button type="submit">Зарегистрироваться</button>
             </div>
         </form>
-        <div></div>
     </div>
 </body>
 </html>

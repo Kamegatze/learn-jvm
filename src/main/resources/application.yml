@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/learn-jvm
+    url: jdbc:postgresql://192.168.1.101:5432/learn-jvm
 
   flyway:
     enabled: true
@@ -17,4 +17,4 @@ spring:
 logging:
   level:
     org:
-      springframework: info
+      springframework: debug

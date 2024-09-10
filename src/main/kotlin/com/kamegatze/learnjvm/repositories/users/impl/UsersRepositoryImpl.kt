@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import java.sql.Timestamp
 import java.util.*
+import kotlin.collections.List
 
 @Repository
 class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val usersRowMapper: UsersRowMapper) : UsersRepository {
@@ -27,9 +28,8 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
     }
 
     override fun save(entity: Users): Users {
-        val createdAt = if (entity.createdAt != null) Timestamp.from(entity.createdAt) else null
-        val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
-        val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
+        val timestampList = getFieldTimestamp(entity)
+        val (createdAt, updatedAt, lastAuthorization) = timestampList
 
         val id = UUID.randomUUID()
 
@@ -43,9 +43,8 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
     }
 
     override fun update(entity: Users): Users {
-        val createdAt = if (entity.createdAt != null) Timestamp.from(entity.createdAt) else null
-        val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
-        val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
+        val timestampList = getFieldTimestamp(entity)
+        val (createdAt, updatedAt, lastAuthorization) = timestampList
 
         jdbcTemplate.update("""
             update users set last_name = ?, first_name = ?, login = ?, password = ?, created_at = ?,
@@ -62,5 +61,12 @@ class UsersRepositoryImpl(private val jdbcTemplate: JdbcTemplate, private val us
 
     override fun findByLogin(login: String): Users? {
         return jdbcTemplate.queryForObject("select * from users where login = ?", usersRowMapper, login)
+    }
+
+    private fun getFieldTimestamp(entity: Users): List<Timestamp?> {
+        val createdAt = if (entity.createdAt != null) Timestamp.from(entity.createdAt) else null
+        val updatedAt = if (entity.updatedAt != null) Timestamp.from(entity.updatedAt) else null
+        val lastAuthorization = if (entity.lastAuthorization != null) Timestamp.from(entity.lastAuthorization) else null
+        return listOf(createdAt, updatedAt, lastAuthorization)
     }
 }

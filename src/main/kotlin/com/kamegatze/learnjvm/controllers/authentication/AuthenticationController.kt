@@ -1,20 +1,22 @@
 package com.kamegatze.learnjvm.controllers.authentication
 
 import com.kamegatze.learnjvm.model.authentication.Login
-import com.kamegatze.learnjvm.model.db.users.Users
+import com.kamegatze.learnjvm.model.registration.Registration
 import com.kamegatze.learnjvm.servicies.authentication.AuthenticationService
+import com.kamegatze.learnjvm.servicies.authentication.exceptions.NotEqualsPasswordAndRetryPasswordException
+import jakarta.validation.Valid
+import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import java.time.Instant
-import java.util.*
 
 @Controller
 @RequestMapping("/authentication")
-class AuthenticationController(private val authenticationService: AuthenticationService) {
+class AuthenticationController(private val authenticationService: AuthenticationService, private val modelMapper: ModelMapper) {
 
     @GetMapping("/login")
     fun handlingLoginPage(model: Model): String {
@@ -24,14 +26,24 @@ class AuthenticationController(private val authenticationService: Authentication
 
     @GetMapping("/register")
     fun handlingRegisterPage(model: Model): String {
-        model.addAttribute("user", Users(null, "", "", "", "",
-            null, null, null, null, null))
+        model.addAttribute("registration", Registration("", "", "", "", ""))
         return "authentication/registration"
     }
 
     @PostMapping("/register")
-    fun handlingRegister(@ModelAttribute("user") user: Users): String {
-        authenticationService.registration(user)
+    fun handlingRegister(@ModelAttribute("registration") @Valid registration: Registration,
+                         bindingResult: BindingResult, model: Model
+    ): String {
+        if (bindingResult.hasErrors()) {
+            return "authentication/registration"
+        }
+
+        try {
+            authenticationService.registration(registration)
+        } catch (e: NotEqualsPasswordAndRetryPasswordException) {
+            model.addAttribute("errorRetryPassword", e.message)
+            return "authentication/registration"
+        }
         return "redirect:/authentication/login"
     }
 }
