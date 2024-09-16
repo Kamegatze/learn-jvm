@@ -2,6 +2,9 @@ spring:
   application:
     name: learn-jvm
 
+  profiles:
+    active: dev
+
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -17,4 +20,4 @@ spring:
 logging:
   level:
     org:
-      springframework: debug
+      springframework: info
