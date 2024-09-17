@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link th:href="@{/static/css/authentication/registration.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link th:href="@{/static/css/main.css}" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
 <body>
-    <div class="container">
-        <!--/*@thymesVar id="registration" type="com.kamegatze.learnjvm.model.registration.Registration"*/-->
-        <form class="child" action="#" th:action="@{/authentication/register}"
-              th:object="${registration}" method="post">
-            <div>
-                <div>
-                    <label>Фамилия:</label>
+    <div class="flex-box">
+        <div class="row container">
+            <div class="col s2"></div>
+            <!--/*@thymesVar id="registration" type="com.kamegatze.learnjvm.model.registration.Registration"*/-->
+            <form class="col s8" action="#" th:action="@{/authentication/register}"
+                  th:object="${registration}" method="post">
+                <div class="row col s12">
+                    <div class="input-field col s12">
+                        <input id="last_name" class="validate" type="text" th:field="*{lastName}"/>
+                        <label for="last_name" >Фамилия</label>
+                        <span class="helper-text red-text" th:if="${#fields.hasErrors('lastName')}"
+                              th:errors="*{lastName}"></span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="first_name" class="validate" type="text" th:field="*{firstName}"/>
+                        <label for="first_name">Имя</label>
+                        <span class="helper-text red-text" th:if="${#fields.hasErrors('firstName')}"
+                              th:errors="*{firstName}"></span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="login" class="validate" type="text" th:field="*{login}"/>
+                        <label for="login">Логин</label>
+                        <span class="helper-text red-text" th:if="${#fields.hasErrors('login')}"
+                              th:errors="*{login}"></span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="password" class="validate" type="password" th:field="*{password}"/>
+                        <label for="password">Пароль</label>
+                        <span class="helper-text red-text" th:if="${#fields.hasErrors('password')}"
+                              th:errors="*{password}"></span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="retry_password" class="validate" type="password" th:field="*{retryPassword}"/>
+                        <label for="retry_password">Повторите пароль</label>
+                        <span class="helper-text red-text" th:if="${#fields.hasErrors('retryPassword')}"
+                              th:errors="*{retryPassword}"></span>
+                        <!--/*@thymesVar id="errorRetryPassword" type="java.lang.String"*/-->
+                        <span class="helper-text red-text" th:if="${errorRetryPassword}" th:text="${errorRetryPassword}"></span>
+                    </div>
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light" type="submit">
+                            <i class="material-icons left">send</i>
+                            Зарегистрироваться
+                        </button>
+                        <a class="btn waves-effect waves-light" th:href="@{/authentication/login}">
+                            <i class="material-icons left">arrow_back</i>
+                            Назад
+                        </a>
+                    </div>
                 </div>
-                <input type="text" th:field="*{lastName}"/>
-                <span th:if="${#fields.hasErrors('lastName')}"
-                      th:errors="*{lastName}"></span>
-            </div>
-            <div>
-                <div>
-                    <label>Имя:</label>
-                </div>
-                <input type="text" th:field="*{firstName}"/>
-                <span th:if="${#fields.hasErrors('firstName')}"
-                      th:errors="*{firstName}"></span>
-            </div>
-            <div>
-                <div>
-                    <label>Логин:</label>
-                </div>
-                <input type="text" th:field="*{login}"/>
-                <span th:if="${#fields.hasErrors('login')}"
-                      th:errors="*{login}"></span>
-            </div>
-            <div>
-                <div>
-                    <label>Пароль:</label>
-                </div>
-                <input type="password" th:field="*{password}"/>
-                <span th:if="${#fields.hasErrors('password')}"
-                      th:errors="*{password}"></span>
-            </div>
-            <div>
-                <div>
-                    <label>Повторите пароль:</label>
-                </div>
-                <input type="password" th:field="*{retryPassword}"/>
-                <span th:if="${#fields.hasErrors('retryPassword')}"
-                      th:errors="*{retryPassword}"></span>
-                <!--/*@thymesVar id="errorRetryPassword" type="java.lang.String"*/-->
-                <span th:if="${errorRetryPassword}" th:text="${errorRetryPassword}"></span>
-            </div>
-            <div>
-                <button type="submit">Зарегистрироваться</button>
-            </div>
-        </form>
+            </form>
+            <div class="col s2"></div>
+        </div>
     </div>
 </body>
 </html>
