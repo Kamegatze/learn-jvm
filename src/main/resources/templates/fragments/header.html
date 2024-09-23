@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="header">
+    <nav class="nav-extended teal">
+        <div class="nav-wrapper">
+            <a th:href="@{/main/home}" class="brand-logo">The Study King</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/main/home}">Home</a></li>
+                <li><a th:href="@{/main/articles}">Articles</a></li>
+                <li><a th:href="@{/main/courses}">Courses</a></li>
+                <li><a href="#" class="dropdown-trigger btn-floating grey" data-target="account-dropdown"><i class="material-icons">account_circle</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul id="account-dropdown" class="dropdown-content">
+        <li><a th:href="@{/account}">account</a></li>
+        <li><a th:href="@{/authentication/logout}">exit</a></li>
+    </ul>
+
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a th:href="@{/main/home}">Home</a></li>
+        <li><a th:href="@{/main/articles}">Articles</a></li>
+        <li><a th:href="@{/main/courses}">Courses</a></li>
+        <li><a th:href="@{/account}">Account</a></li>
+    </ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            const element = document.querySelectorAll('.dropdown-trigger')
+            const instances = M.Dropdown.init(element)
+        });
+    </script>
+</th:block>
+</body>
+</html>

@@ -5,9 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/main")
 class HomeController {
 
-    @GetMapping
+    @GetMapping("/home")
     fun handlingHomePage() = "home"
+
+    @GetMapping("/articles")
+    fun handlingArticles() = "articles"
+
+    @GetMapping("/courses")
+    fun handlingCourses() = "courses"
+
 }

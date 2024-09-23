@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{/static/css/main.css}" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <title>learn-jvm</title>
+    <th:block th:replace="~{fragments/links :: links}"></th:block>
+    <title>Sign in</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -16,11 +13,11 @@
             <form class="col s8" action="#" th:action="@{/authentication/processing}" th:object="${login}" method="post">
                 <div class="row col s12">
                     <div class="input-field col s12">
-                        <input class="validate" id="login" type="text" th:field="*{username}">
+                        <input class="validate" id="login" type="text" th:field="*{username}" th:value="${login.username}">
                         <label for="login">Имя пользователя</label>
                     </div>
                     <div class="input-field col s12">
-                        <input class="validate" id="password" type="password" th:field="*{password}">
+                        <input class="validate" id="password" type="password" th:field="*{password}" th:value="${login.password}">
                         <label for="password">Пароль</label>
                     </div>
                     <div class="input-field col s12">
@@ -32,6 +29,9 @@
                             <i class="material-icons left">add_circle</i>
                             Зарегистрироваться
                         </a>
+                    </div>
+                    <div th:if="${param.error}" class="col s12">
+                        <span class="red-text helper-text">Проверьте введеные имя пользователя и пароль</span>
                     </div>
                 </div>
             </form>

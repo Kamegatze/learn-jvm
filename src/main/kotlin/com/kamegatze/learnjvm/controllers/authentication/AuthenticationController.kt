@@ -5,7 +5,6 @@ import com.kamegatze.learnjvm.model.registration.Registration
 import com.kamegatze.learnjvm.servicies.authentication.AuthenticationService
 import com.kamegatze.learnjvm.servicies.authentication.exceptions.NotEqualsPasswordAndRetryPasswordException
 import jakarta.validation.Valid
-import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/authentication")
-class AuthenticationController(private val authenticationService: AuthenticationService, private val modelMapper: ModelMapper) {
+class AuthenticationController(private val authenticationService: AuthenticationService) {
 
     @GetMapping("/login")
     fun handlingLoginPage(model: Model): String {
