@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
+<head>
+    <th:block th:replace="~{fragments/links :: links}"></th:block>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/links :: title}"></th:block>
+</head>
+<body>
+    <div class="page">
+        <th:block th:replace="~{fragments/header :: header}"></th:block>
+        <div class="page-content d-flex aligns-items-center">
+            <div class="row container">
+                <div class="col s3"></div>
+                <!--/*@thymesVar id="article" type="com.kamegatze.learnjvm.model.db.articles.Article"*/-->
+                <form class="col s6" action="#" th:action="@{/main/articles/create}" th:object="${article}" method="post">
+                    <div class="input-field">
+                        <input class="validate" id="heading" type="text" th:field="*{label}">
+                        <label for="heading">Название статьи</label>
+                    </div>
+                    <th:block th:each="chapter, item : *{chapters}">
+                        <div class="input-field">
+                            <input class="validate" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{chapters[__${item.index}__].label}">
+                            <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
+                        </div>
+                        <div class="input-field">
+                            <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
+                                      th:field="*{chapters[__${item.index}__].content}" style="height: 20em"></textarea>
+                            <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+                        </div>
+                    </th:block>
+                </form>
+                <div class="col s3"></div>
+            </div>
+        </div>
+        <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    </div>
+</body>
+<script>
+    /**
+     * for some reason not correct field 'name chapter', had to make the crutch
+     * */
+
+    const items = document.getElementsByClassName("input-field");
+    for (let i = 0; i < items.length; i++) {
+        items[i].addEventListener("click", () => {
+            const label = items[i].getElementsByTagName("label")
+            if (!label[0].className.includes("active")) {
+                label[0].className = 'active'
+            }
+        });
+    }
+
+    const body = document.querySelector("body")
+    body.addEventListener("click", (e) => {
+        let isClick = false
+        for (let i = 0; i < items.length; i++) {
+            if (items[i] === e.target || items[i].contains(e.target)) {
+                isClick = true
+                break
+            }
+        }
+
+        if (!isClick) {
+            document.querySelectorAll("label.active").forEach(item => {
+                item.className = ""
+            })
+        }
+    })
+
+</script>
+</html>

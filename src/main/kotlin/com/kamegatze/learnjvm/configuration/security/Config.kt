@@ -22,12 +22,12 @@ class Config(private val passwordEncoder: PasswordEncoder, private val userDetai
         http
             .sessionManagement{it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)}
             .authorizeHttpRequests {
-                it.requestMatchers("/posts/**", "/authentication/**", "/main/**", "/static/**").permitAll()
+                it.requestMatchers("/posts/**", "/authentication/**", "/main/**", "/static/**", "/", "/error/**", "/logout").permitAll()
                 .anyRequest().authenticated()
             }
             .authenticationProvider(authenticationProvider())
             .formLogin { it.loginPage("/authentication/login")
-                .permitAll().defaultSuccessUrl("/main/home", true).loginProcessingUrl("/authentication/processing") }
-            .logout { it.logoutUrl("/authentication/logout").logoutSuccessUrl("/authentication/login").clearAuthentication(true).permitAll() }
+                .defaultSuccessUrl("/main/home", true).loginProcessingUrl("/authentication/processing").permitAll() }
+            .logout { it.logoutUrl("/logout").logoutSuccessUrl("/authentication/login").clearAuthentication(true).permitAll() }
             .build()
 }

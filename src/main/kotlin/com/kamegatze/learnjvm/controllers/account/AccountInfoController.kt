@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping("/account")
 class AccountInfoController {
 
-    @GetMapping
+    @GetMapping("/page_info")
     fun handlingAccount() = "account/main"
 
 }

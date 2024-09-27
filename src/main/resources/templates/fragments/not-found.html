@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/links :: links}"></th:block>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/links :: title}"></th:block>
+</head>
+<body>
+    <th:block th:fragment="not-found">
+        <div class="row container">
+            <div class="col s3"></div>
+            <div class="col s6">
+                <div class="card">
+                    <div class="card-image">
+                        <img th:src="@{/static/image/images/not-found.png}" alt="Not found page">
+                    </div>
+                    <div class="card-content">
+                        <p>Error 404 ops... Not found page</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s3"></div>
+        </div>
+    </th:block>
+</body>
+</html>

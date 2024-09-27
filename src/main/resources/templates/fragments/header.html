@@ -20,8 +20,12 @@
     </nav>
 
     <ul id="account-dropdown" class="dropdown-content">
-        <li><a th:href="@{/account}">account</a></li>
-        <li><a th:href="@{/authentication/logout}">exit</a></li>
+        <li><a th:href="@{/account/page_info}">account</a></li>
+        <li>
+            <form class="d-flex justify-content-center" th:action="@{/logout}" method="post">
+                <button class="button-merges-background w-100" type="submit">exit</button>
+            </form>
+        </li>
     </ul>
 
 
@@ -29,7 +33,7 @@
         <li><a th:href="@{/main/home}">Home</a></li>
         <li><a th:href="@{/main/articles}">Articles</a></li>
         <li><a th:href="@{/main/courses}">Courses</a></li>
-        <li><a th:href="@{/account}">Account</a></li>
+        <li><a th:href="@{/account/page_info}">Account</a></li>
     </ul>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
