@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class UsersDetails(private val user: Users, private val roleName: String) : UserDetails {
+class UsersDetails(val user: Users, private val roleName: String) : UserDetails {
 
     private val authorities: MutableCollection<GrantedAuthority> = mutableListOf(SimpleGrantedAuthority(roleName))
 

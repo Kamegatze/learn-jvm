@@ -12,60 +12,54 @@
             <div class="row container">
                 <div class="col s3"></div>
                 <!--/*@thymesVar id="article" type="com.kamegatze.learnjvm.model.db.articles.Article"*/-->
-                <form class="col s6" action="#" th:action="@{/main/articles/create}" th:object="${article}" method="post">
+                <form class="col s6" action="#" th:action="@{/articles/create}" th:object="${article}" method="post">
                     <div class="input-field">
                         <input class="validate" id="heading" type="text" th:field="*{label}">
                         <label for="heading">Название статьи</label>
                     </div>
-                    <th:block th:each="chapter, item : *{chapters}">
-                        <div class="input-field">
-                            <input class="validate" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{chapters[__${item.index}__].label}">
-                            <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
-                        </div>
-                        <div class="input-field">
+                    <div id="chapters">
+                        <th:block th:each="chapter, item : *{chapters}">
+                            <div class="input-field">
+                                <input class="validate" type="text" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{chapters[__${item.index}__].label}">
+                                <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
+                            </div>
+                            <div class="input-field">
                             <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
                                       th:field="*{chapters[__${item.index}__].content}" style="height: 20em"></textarea>
-                            <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
-                        </div>
-                    </th:block>
+                                <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+                            </div>
+                        </th:block>
+                    </div>
+                    <button type="submit" class="btn waves-effect waves-light">Сохранить</button>
+                    <button id="addition-chapter" type="button" class="btn waves-effect waves-light">Добавить раздел</button>
                 </form>
                 <div class="col s3"></div>
             </div>
         </div>
         <th:block th:replace="~{fragments/footer :: footer}"></th:block>
     </div>
-</body>
-<script>
-    /**
-     * for some reason not correct field 'name chapter', had to make the crutch
-     * */
+    <script>
+        document.querySelector("#addition-chapter").addEventListener("click", () => {
+            const textarea = document.querySelector("textarea");
+            let body = `${textarea.name}=${textarea.value}`;
+            document.querySelectorAll("input").forEach( item => {
+               body = `${body}&${item.name}=${item.value}`;
+            });
 
-    const items = document.getElementsByClassName("input-field");
-    for (let i = 0; i < items.length; i++) {
-        items[i].addEventListener("click", () => {
-            const label = items[i].getElementsByTagName("label")
-            if (!label[0].className.includes("active")) {
-                label[0].className = 'active'
-            }
+            fetch("/articles/create/addition-chapter", {
+                method: "POST",
+                body,
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded"
+                }
+            }).then(response => {
+                response.text().then(value => {
+                    document.querySelector("#chapters").innerHTML = value;
+                });
+            });
         });
-    }
 
-    const body = document.querySelector("body")
-    body.addEventListener("click", (e) => {
-        let isClick = false
-        for (let i = 0; i < items.length; i++) {
-            if (items[i] === e.target || items[i].contains(e.target)) {
-                isClick = true
-                break
-            }
-        }
 
-        if (!isClick) {
-            document.querySelectorAll("label.active").forEach(item => {
-                item.className = ""
-            })
-        }
-    })
-
-</script>
+    </script>
+</body>
 </html>

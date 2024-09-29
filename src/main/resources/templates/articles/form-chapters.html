@@ -1,0 +1,12 @@
+<!--/*@thymesVar id="article" type="com.kamegatze.learnjvm.model.db.articles.Article"*/-->
+<th:block th:each="chapter, item : *{article.chapters}">
+    <div class="input-field">
+        <input class="validate" type="text" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{article.chapters[__${item.index}__].label}">
+        <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
+    </div>
+    <div class="input-field">
+                            <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
+                                      th:field="*{article.chapters[__${item.index}__].content}" style="height: 20em"></textarea>
+        <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+    </div>
+</th:block>

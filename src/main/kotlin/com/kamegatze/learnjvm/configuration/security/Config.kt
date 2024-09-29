@@ -22,7 +22,7 @@ class Config(private val passwordEncoder: PasswordEncoder, private val userDetai
         http
             .sessionManagement{it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)}
             .authorizeHttpRequests {
-                it.requestMatchers("/posts/**", "/authentication/**", "/main/**", "/static/**", "/", "/error/**", "/logout").permitAll()
+                it.requestMatchers("/posts/**", "/authentication/**", "/main/**", "/static/**", "/", "/error/**", "/logout", "/articles/view/**").permitAll()
                 .anyRequest().authenticated()
             }
             .authenticationProvider(authenticationProvider())
