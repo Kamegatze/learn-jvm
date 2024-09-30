@@ -19,14 +19,28 @@
                     </div>
                     <div id="chapters">
                         <th:block th:each="chapter, item : *{chapters}">
-                            <div class="input-field">
-                                <input class="validate" type="text" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{chapters[__${item.index}__].label}">
-                                <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
-                            </div>
-                            <div class="input-field">
-                            <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
+                            <div class="row">
+                                <div class="col s11">
+                                    <div class="input-field">
+                                        <input class="validate" type="text" th:id="${T(java.lang.String).format('%s-%s', item.index, 'heading')}" th:field="*{chapters[__${item.index}__].label}">
+                                        <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
+                                    </div>
+                                    <div class="input-field">
+                                    <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
                                       th:field="*{chapters[__${item.index}__].content}" style="height: 20em"></textarea>
-                                <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+                                        <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+                                    </div>
+                                </div>
+                                <th:block th:if="${item.index != 0}">
+                                    <div class="col s1">
+                                        <button type="button" class="btn-floating waves-effect waves-light remove"><i class="material-icons">clear</i></button>
+                                    </div>
+                                </th:block>
+                                <th:block th:unless="${item.index != 0}">
+                                    <div class="col s1">
+                                        <button type="button" class="btn-floating waves-effect waves-light disabled remove"><i class="material-icons">clear</i></button>
+                                    </div>
+                                </th:block>
                             </div>
                         </th:block>
                     </div>
@@ -40,11 +54,7 @@
     </div>
     <script>
         document.querySelector("#addition-chapter").addEventListener("click", () => {
-            const textarea = document.querySelector("textarea");
-            let body = `${textarea.name}=${textarea.value}`;
-            document.querySelectorAll("input").forEach( item => {
-               body = `${body}&${item.name}=${item.value}`;
-            });
+            const body = createBody()
 
             fetch("/articles/create/addition-chapter", {
                 method: "POST",
@@ -55,10 +65,42 @@
             }).then(response => {
                 response.text().then(value => {
                     document.querySelector("#chapters").innerHTML = value;
+                    document.querySelectorAll("#chapters .remove").forEach(item => {
+                        item.addEventListener('click', (e) => {
+                            deleteItemChapter(e)
+                        })
+                    })
                 });
             });
         });
 
+        document.querySelectorAll("#chapters .remove").forEach(item => {
+            item.addEventListener('click', (e) => {
+                deleteItemChapter(e)
+            })
+        })
+
+        function deleteItemChapter(e) {
+            const button = e.currentTarget;
+            const deleteItem = button.closest("div.row");
+            deleteItem.remove();
+        }
+
+        function createBody() {
+            const textarea = document.querySelectorAll("textarea");
+            let body = '';
+            textarea.forEach((item, index) => {
+                if (index + 1 !== textarea.length) {
+                    body = `${body}${item.name}=${item.value}&`;
+                } else {
+                    body = `${body}${item.name}=${item.value}`;
+                }
+            });
+            document.querySelectorAll("input").forEach( item => {
+                body = `${body}&${item.name}=${item.value}`;
+            });
+            return body
+        }
 
     </script>
 </body>
