@@ -1,4 +1,4 @@
-package com.kamegatze.learnjvm.model.db.roles
+package com.kamegatze.learnjvm.model.roles
 
 import java.util.UUID
 

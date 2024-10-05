@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.repositories.roles
 
-import com.kamegatze.learnjvm.model.db.roles.Roles
+import com.kamegatze.learnjvm.model.roles.Roles
 import com.kamegatze.learnjvm.repositories.AbstractRepository
 import java.util.UUID
 

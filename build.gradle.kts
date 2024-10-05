@@ -1,4 +1,5 @@
 plugins {
+    kotlin("kapt") version "1.7.21"
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.3.3"
@@ -25,7 +26,7 @@ repositories {
     mavenCentral()
 }
 
-val modelMapper = "3.2.1"
+val mapstruct = "1.6.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
@@ -37,7 +38,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.modelmapper:modelmapper:$modelMapper")
+    implementation("org.mapstruct.extensions.spring:mapstruct-spring-annotations:0.1.2")
+    implementation("org.mapstruct:mapstruct:$mapstruct")
+    kapt("org.mapstruct:mapstruct-processor:$mapstruct")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

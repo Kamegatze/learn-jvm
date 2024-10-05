@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.configuration.security.details
 
-import com.kamegatze.learnjvm.model.db.users.Users
+import com.kamegatze.learnjvm.model.users.Users
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

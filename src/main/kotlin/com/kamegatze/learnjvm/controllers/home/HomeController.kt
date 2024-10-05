@@ -18,7 +18,7 @@ class HomeController(
 
     @GetMapping("/articles")
     fun handlingArticles(model: Model): String {
-        model.addAttribute("articles", articlesService.findAll())
+        model.addAttribute("articles", articlesService.findAll().filter { it.published!! })
         return "articles"
     }
 

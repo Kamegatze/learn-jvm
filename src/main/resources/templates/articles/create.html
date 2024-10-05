@@ -11,7 +11,7 @@
         <div class="page-content d-flex aligns-items-center">
             <div class="row container">
                 <div class="col s3"></div>
-                <!--/*@thymesVar id="article" type="com.kamegatze.learnjvm.model.db.articles.Article"*/-->
+                <!--/*@thymesVar id="article" type="com.kamegatze.learnjvm.model.articles.Article"*/-->
                 <form class="col s6" action="#" th:action="@{/articles/create}" th:object="${article}" method="post">
                     <div class="input-field">
                         <input class="validate" id="heading" type="text" th:field="*{label}">
@@ -26,9 +26,9 @@
                                         <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'heading')}">Название раздела</label>
                                     </div>
                                     <div class="input-field">
-                                    <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
-                                      th:field="*{chapters[__${item.index}__].content}" style="height: 20em"></textarea>
-                                        <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
+                                        <textarea class="materialize-textarea" th:id="${T(java.lang.String).format('%s-%s', item.index, 'content')}"
+                                            th:field="*{chapters[__${item.index}__].content}" style="height: 20em"></textarea>
+                                            <label th:for="${T(java.lang.String).format('%s-%s', item.index, 'content')}">Текст раздела</label>
                                     </div>
                                 </div>
                                 <th:block th:if="${item.index != 0}">

@@ -1,4 +1,4 @@
-package com.kamegatze.learnjvm.model.db.users
+package com.kamegatze.learnjvm.model.users
 
 import java.time.Instant
 import java.util.UUID

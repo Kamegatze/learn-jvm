@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.flex-direction-column {
+    flex-direction: column;
+}
+
 .button-merges-background {
     background: none;
     color: inherit;
@@ -26,6 +30,10 @@
 
 .aligns-items-center {
     align-items: center;
+}
+
+.aligns-items-flex-end {
+    align-items: flex-end;
 }
 
 .flex-box-order-first {
@@ -63,12 +71,24 @@ nav .brand-logo {
     flex-grow: 1;
 }
 
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
 .w-100 {
     width: 100%;
 }
 
 .h-100 {
     height: 100%;
+}
+
+.h-75 {
+    height: 75%;
 }
 
 .m-0 {

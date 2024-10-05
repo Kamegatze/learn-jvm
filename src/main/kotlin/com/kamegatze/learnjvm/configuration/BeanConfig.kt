@@ -1,12 +1,13 @@
 package com.kamegatze.learnjvm.configuration
 
 
-import org.modelmapper.ModelMapper
-import org.modelmapper.convention.MatchingStrategies
+import com.kamegatze.learnjvm.model.db.Entity
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.relational.core.mapping.event.BeforeConvertCallback
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
+import java.util.*
 
 @Configuration
 class BeanConfig {
@@ -14,13 +15,12 @@ class BeanConfig {
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 
     @Bean
-    fun createModelMapper(): ModelMapper {
-        val modelMapper = ModelMapper()
-        modelMapper.configuration
-            .setMatchingStrategy(MatchingStrategies.STRICT)
-            .setFieldMatchingEnabled(true)
-            .setSkipNullEnabled(true)
-            .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
-        return modelMapper
+    fun beforeConverterCallback(): BeforeConvertCallback<Entity> {
+        return BeforeConvertCallback<Entity> {minion: Entity ->
+            if (minion.id == null) {
+                minion.id = UUID.randomUUID()
+            }
+            minion
+        }
     }
 }

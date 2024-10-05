@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.repositories.users.impl
 
-import com.kamegatze.learnjvm.model.db.users.Users
+import com.kamegatze.learnjvm.model.users.Users
 import com.kamegatze.learnjvm.repositories.users.UsersRepository
 import com.kamegatze.learnjvm.repositories.users.row.mapper.UsersRowMapper
 import org.springframework.jdbc.core.JdbcTemplate

@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.repositories.roles.impl
 
-import com.kamegatze.learnjvm.model.db.roles.Roles
+import com.kamegatze.learnjvm.model.roles.Roles
 import com.kamegatze.learnjvm.repositories.roles.RolesRepository
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
@@ -28,6 +28,6 @@ class RolesRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : RolesReposit
     }
 
     private fun rowMapper(): RowMapper<Roles> {
-        return RowMapper<Roles> { rs, _ ->  Roles(UUID.fromString(rs.getString("id")), rs.getString("name"))}
+        return RowMapper<Roles> { rs, _ ->  Roles(UUID.fromString(rs.getString("id")), rs.getString("name")) }
     }
 }

@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.repositories.users.row.mapper
 
-import com.kamegatze.learnjvm.model.db.users.Users
+import com.kamegatze.learnjvm.model.users.Users
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Component
 import java.sql.ResultSet

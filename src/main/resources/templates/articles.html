@@ -9,18 +9,45 @@
 <div class="page">
     <th:block th:replace="~{fragments/header :: header}"></th:block>
     <div class="page-content justify-content-center">
-        <!--/*@thymesVar id="articles" type="java.util.List<com.kamegatze.learnjvm.model.db.articles.Article>"*/-->
-        <th:block th:each="article, item : ${articles}">
+        <div class="row container">
+            <div class="col s3"></div>
+            <div class="col s6">
+                <div class="card">
+                    <div class="card-content">
+                        <a class="btn waves-effect waves-light center-align" th:href="@{/articles/create}">Создать статью</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s3"></div>
+        </div>
+        <!--/*@thymesVar id="articles" type="java.util.List<com.kamegatze.learnjvm.model.articles.Article>"*/-->
+        <th:block th:if="${!articles.isEmpty()}" th:each="article, item : ${articles}">
             <div class="row container">
                 <div class="col s3"></div>
                 <div class="col s6">
                     <div class="card">
                         <div class="card-content">
                             <span class="card-title" th:text="${article.label}"></span>
-                            <p th:text="${article.chapters.get(0).content}"></p>
+                            <p class="truncate" th:text="${article.chapters.get(0).content}"></p>
                         </div>
                         <div class="card-action">
                             <a class="btn waves-effect waves-light" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3"></div>
+            </div>
+        </th:block>
+        <th:block th:if="${articles.isEmpty()}">
+            <div class="row container">
+                <div class="col s3"></div>
+                <div class="col s6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img th:src="@{/static/image/images/not-found.png}" alt="404" height="300px" width="600px">
+                        </div>
+                        <div class="card-content">
+                            <p>Not found articles...</p>
                         </div>
                     </div>
                 </div>
