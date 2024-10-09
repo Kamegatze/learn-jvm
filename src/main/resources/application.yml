@@ -21,3 +21,13 @@ logging:
   level:
     org:
       springframework: info
+
+management:
+  endpoints.web.exposure.include: 'prometheus, health'
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
