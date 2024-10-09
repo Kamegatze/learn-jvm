@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="bar-search-article">
+    <div class="row container">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+                    <form class="d-flex aligns-items-flex-end" action="#" th:action="@{/articles/search-by-name}" method="get">
+                        <div class="input-field flex-grow-1">
+                            <input class="validate" type="text" id="search-input" th:name="${searchName}">
+                            <label for="search-input">Поиск по статьям</label>
+                        </div>
+                        <div class="input-field ms-3">
+                            <button type="submit" class="btn-floating waves-effect waves-light"><i class="material-icons">search</i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-action">
+                    <a class="btn waves-effect waves-light center-align" th:href="@{/articles/create}">Создать статью</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s3"></div>
+    </div>
+</th:block>
+</body>
+</html>

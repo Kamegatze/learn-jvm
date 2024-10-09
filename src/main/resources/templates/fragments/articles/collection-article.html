@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="collection-article-editor">
+    <div class="row container">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" th:text="${article.label}"></span>
+                    <p class="truncate" th:text="${article.chapters.get(0).content}"></p>
+                </div>
+                <div class="card-action d-flex">
+                    <a class="btn waves-effect waves-light" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>
+                    <div class="flex-grow-1"></div>
+                    <div class="switch align-self-center">
+                        <label>
+                            <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/published/{id}((id=${article.id}))}" method="post" onchange="changeStateCheckbox(this)">
+                                <input th:if="${article.published}" checked class="switch-input" type="checkbox">
+                                <input th:unless="${article.published}" class="switch-input" type="checkbox">
+                                <span class="lever"></span>
+                                <span class="mt-2">опубликовать</span>
+                            </form>
+                        </label>
+                    </div>
+                    <a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn-floating waves-effect waves-light blue ms-3"><i class="material-icons">edit</i></a>
+                    <form action="#" th:action="@{/articles/delete/{id}(id=${article.id})}" method="post">
+                        <button type="submit" class="btn-floating waves-effect waves-light red ms-3"><i class="material-icons">delete</i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col s3"></div>
+    </div>
+</th:block>
+</body>
+</html>

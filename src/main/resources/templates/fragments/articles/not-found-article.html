@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="not-found-article">
+    <div class="row container">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <div class="card">
+                <div class="card-image">
+                    <img th:src="@{/static/image/images/not-found.png}" alt="404" height="300px" width="600px">
+                </div>
+                <div class="card-content">
+                    <p>Not found articles...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s3"></div>
+    </div>
+</th:block>
+</body>
+</html>

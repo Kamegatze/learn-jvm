@@ -9,76 +9,13 @@
     <div class="page">
         <th:block th:replace="~{fragments/header :: header}"></th:block>
         <div class="page-content d-flex aligns-items-center flex-direction-column">
-            <div class="row container">
-                <div class="col s3"></div>
-                <div class="col s6">
-                    <div class="card">
-                        <div class="card-content">
-                            <form class="d-flex aligns-items-flex-end" action="#" th:action="@{/articles/search-by-name}" method="get">
-                                <div class="input-field flex-grow-1">
-                                    <input class="validate" type="text" id="search-input" th:name="${searchName}">
-                                    <label for="search-input">Поиск по статьям</label>
-                                </div>
-                                <div class="input-field ms-3">
-                                    <button type="submit" class="btn-floating waves-effect waves-light"><i class="material-icons">search</i></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-action">
-                            <a class="btn waves-effect waves-light center-align" th:href="@{/articles/create}">Создать статью</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s3"></div>
-            </div>
+            <th:block th:replace="~{fragments/articles/bar-search-article :: bar-search-article}"></th:block>
             <!--/*@thymesVar id="articles" type="java.util.List<com.kamegatze.learnjvm.model.articles.Article>"*/-->
             <th:block th:if="${!articles.isEmpty()}" th:each="article, item : ${articles}">
-                <div class="row container">
-                    <div class="col s3"></div>
-                    <div class="col s6">
-                        <div class="card">
-                            <div class="card-content">
-                                <span class="card-title" th:text="${article.label}"></span>
-                                <p class="truncate" th:text="${article.chapters.get(0).content}"></p>
-                            </div>
-                            <div class="card-action d-flex">
-                                <a class="btn waves-effect waves-light" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>
-                                <div class="flex-grow-1"></div>
-                                <div class="switch align-self-center">
-                                    <label>
-                                        <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/published/{id}((id=${article.id}))}" method="post" onchange="changeStateCheckbox(this)">
-                                            <input th:if="${article.published}" checked class="switch-input" type="checkbox">
-                                            <input th:unless="${article.published}" class="switch-input" type="checkbox">
-                                            <span class="lever"></span>
-                                            <span class="mt-2">опубликовать</span>
-                                        </form>
-                                    </label>
-                                </div>
-                                <a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn-floating waves-effect waves-light blue ms-3"><i class="material-icons">edit</i></a>
-                                <form action="#" th:action="@{/articles/delete/{id}(id=${article.id})}" method="post">
-                                    <button type="submit" class="btn-floating waves-effect waves-light red ms-3"><i class="material-icons">delete</i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s3"></div>
-                </div>
+                <th:block th:replace="~{fragments/articles/collection-article :: collection-article-editor}"></th:block>
             </th:block>
             <th:block th:if="${articles.isEmpty()}">
-                <div class="row container">
-                    <div class="col s3"></div>
-                    <div class="col s6">
-                        <div class="card">
-                            <div class="card-image">
-                                <img th:src="@{/static/image/images/not-found.png}" alt="404" height="300px" width="600px">
-                            </div>
-                            <div class="card-content">
-                                <p>Not found articles...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s3"></div>
-                </div>
+                <th:block th:replace="~{fragments/articles/not-found-article :: not-found-article}"></th:block>
             </th:block>
         </div>
         <th:block th:replace="~{fragments/footer :: footer}"></th:block>
