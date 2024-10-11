@@ -4,7 +4,7 @@ import com.kamegatze.learnjvm.model.db.Entity
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 @Table(value = "posts")
 class Posts(

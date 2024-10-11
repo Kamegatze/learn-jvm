@@ -3,7 +3,7 @@ package com.kamegatze.learnjvm.model.db.articles
 import com.kamegatze.learnjvm.model.db.Entity
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
-import java.util.UUID
+import java.util.*
 
 @Table(name = "posts_table_of_contents")
 class PostsTableOfContents(

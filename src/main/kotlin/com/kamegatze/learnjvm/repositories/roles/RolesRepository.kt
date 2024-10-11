@@ -3,7 +3,7 @@ package com.kamegatze.learnjvm.repositories.roles
 import com.kamegatze.learnjvm.model.db.roles.Roles
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.PagingAndSortingRepository
-import java.util.UUID
+import java.util.*
 
 interface RolesRepository : CrudRepository<Roles, UUID>, PagingAndSortingRepository<Roles, UUID> {
     fun findByName(name: String): Roles?

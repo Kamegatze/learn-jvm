@@ -1,7 +1,7 @@
 package com.kamegatze.learnjvm.model.articles
 
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 class Chapter(var id: UUID?, var label: String?, var content: String?, var order: Int?, var createdAt: Instant?, var updatedAt: Instant?) {
     constructor(label: String, content: String) : this(null, label, content, null, null, null)

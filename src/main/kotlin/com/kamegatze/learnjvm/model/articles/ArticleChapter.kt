@@ -1,6 +1,6 @@
 package com.kamegatze.learnjvm.model.articles
 
-import java.util.UUID
+import java.util.*
 
 
 class ArticleChapter
