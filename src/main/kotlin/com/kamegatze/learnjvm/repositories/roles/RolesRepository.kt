@@ -1,21 +1,38 @@
 package com.kamegatze.learnjvm.repositories.roles
 
-import com.kamegatze.learnjvm.model.roles.Roles
-import com.kamegatze.learnjvm.repositories.AbstractRepository
+import com.kamegatze.learnjvm.model.db.roles.Roles
+import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.PagingAndSortingRepository
 import java.util.UUID
 
-interface RolesRepository : AbstractRepository<Roles, UUID> {
-    fun findByRole(role: String): Roles?
+interface RolesRepository : CrudRepository<Roles, UUID>, PagingAndSortingRepository<Roles, UUID> {
+    fun findByName(name: String): Roles?
 
-    override fun save(entity: Roles): Roles {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun <S : Roles?> save(entity: S & Any): S & Any {
+        throw UnsupportedOperationException()
     }
 
-    override fun update(entity: Roles): Roles {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun <S : Roles?> saveAll(entities: MutableIterable<S>): MutableIterable<S> {
+        throw UnsupportedOperationException()
     }
 
-    override fun delete(id: UUID) {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun deleteById(id: UUID) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun delete(entity: Roles) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun deleteAllById(ids: MutableIterable<UUID>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun deleteAll(entities: MutableIterable<Roles>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun deleteAll() {
+        throw UnsupportedOperationException()
     }
 }

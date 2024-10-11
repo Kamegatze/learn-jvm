@@ -1,10 +1,11 @@
 package com.kamegatze.learnjvm.repositories.users
 
-import com.kamegatze.learnjvm.model.users.Users
-import com.kamegatze.learnjvm.repositories.AbstractRepository
+import com.kamegatze.learnjvm.model.db.users.Users
+import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.PagingAndSortingRepository
 import java.util.UUID
 
-interface UsersRepository : AbstractRepository<Users, UUID> {
+interface UsersRepository : CrudRepository<Users, UUID>, PagingAndSortingRepository<Users, UUID> {
 
     fun findByLogin(login: String): Users?
 

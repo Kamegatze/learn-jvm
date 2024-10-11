@@ -1,7 +1,7 @@
 package com.kamegatze.learnjvm.servicies.authentication.impl
 
 import com.kamegatze.learnjvm.model.mappers.users.UsersMapper
-import com.kamegatze.learnjvm.model.users.Users
+import com.kamegatze.learnjvm.model.db.users.Users
 import com.kamegatze.learnjvm.model.registration.Registration
 import com.kamegatze.learnjvm.repositories.roles.RolesRepository
 import com.kamegatze.learnjvm.repositories.users.UsersRepository
@@ -29,10 +29,9 @@ class AuthenticationServiceImpl(private val usersRepository: UsersRepository,
         val users = usersMapper.mapRegistrationToUser(registration)
 
 
-        users.id = UUID.randomUUID()
         users.createdAt = Instant.now()
         users.password = passwordEncoder.encode(users.password)
-        users.roleId = rolesRepository.findByRole("ROLE_USER")?.id
+        users.roleId = rolesRepository.findByName("ROLE_USER")?.id
         return usersRepository.save(users)
     }
 }

@@ -1,7 +1,7 @@
 package com.kamegatze.learnjvm.servicies.articles
 
 import com.kamegatze.learnjvm.model.articles.Article
-import com.kamegatze.learnjvm.model.users.Users
+import com.kamegatze.learnjvm.model.db.users.Users
 import org.springframework.data.domain.Pageable
 import java.util.UUID
 

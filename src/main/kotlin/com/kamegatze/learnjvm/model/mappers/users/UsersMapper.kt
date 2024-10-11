@@ -2,7 +2,7 @@ package com.kamegatze.learnjvm.model.mappers.users
 
 import com.kamegatze.learnjvm.configuration.MapstructConfig
 import com.kamegatze.learnjvm.model.registration.Registration
-import com.kamegatze.learnjvm.model.users.Users
+import com.kamegatze.learnjvm.model.db.users.Users
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 

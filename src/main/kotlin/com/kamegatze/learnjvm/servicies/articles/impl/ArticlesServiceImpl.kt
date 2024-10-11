@@ -6,7 +6,7 @@ import com.kamegatze.learnjvm.model.db.articles.PostsTableOfContents
 import com.kamegatze.learnjvm.model.mappers.articles.ArticleChapterMapper
 import com.kamegatze.learnjvm.model.mappers.articles.ArticleMapper
 import com.kamegatze.learnjvm.model.mappers.articles.ChapterMapper
-import com.kamegatze.learnjvm.model.users.Users
+import com.kamegatze.learnjvm.model.db.users.Users
 import com.kamegatze.learnjvm.repositories.articles.tableofcontent.TableOfContentRepository
 import com.kamegatze.learnjvm.repositories.articles.posts.PostsRepository
 import com.kamegatze.learnjvm.repositories.articles.poststableofcontents.PostsTableOfContentsRepository
