@@ -27,6 +27,9 @@ repositories {
 }
 
 val mapstruct = "1.6.2"
+val flexmark = "0.64.0"
+val jsoup = "1.18.1"
+val mapstructSpringAnnotation = "0.1.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
@@ -38,9 +41,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.mapstruct.extensions.spring:mapstruct-spring-annotations:0.1.2")
+    implementation("org.mapstruct.extensions.spring:mapstruct-spring-annotations:$mapstructSpringAnnotation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
+    implementation("com.vladsch.flexmark:flexmark:$flexmark")
+    implementation("org.jsoup:jsoup:$jsoup")
     implementation("org.mapstruct:mapstruct:$mapstruct")
     kapt("org.mapstruct:mapstruct-processor:$mapstruct")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")

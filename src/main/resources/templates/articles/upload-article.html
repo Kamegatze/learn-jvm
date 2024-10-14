@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/links :: links}"></th:block>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/links :: title}"></th:block>
+</head>
+<body>
+    <div class="page">
+        <th:block th:replace="~{fragments/header :: header}"></th:block>
+        <div class="page-content d-flex aligns-items-center">
+            <div class="row container">
+                <div class="col s3"></div>
+                <form class="col s6" action="#" th:action="@{/articles/create/upload}" method="post" enctype="multipart/form-data">
+                    <div class="input-field">
+                        <input id="label" type="text" class="validate" name="label">
+                        <label for="label">Название статьи</label>
+                    </div>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span><i class="material-icons">attach_file</i></span>
+                            <input class="validate" type="file" id="upload-file" name="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Выберите файл">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn waves-effect waves-light">Загрузить статью</button>
+                </form>
+                <div class="col s3"></div>
+            </div>
+        </div>
+        <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    </div>
+</body>
+</html>

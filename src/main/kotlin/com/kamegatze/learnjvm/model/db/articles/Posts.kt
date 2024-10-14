@@ -9,7 +9,7 @@ import java.util.*
 @Table(value = "posts")
 class Posts(
     @field:Column(value = "user_id")
-    var userId: UUID,
+    var userId: UUID?,
     @field:Column(value = "label")
     var label: String,
     @field:Column(value = "created_at")
@@ -17,6 +17,8 @@ class Posts(
     @field:Column(value = "updated_at")
     var updatedAt: Instant?,
     @field:Column(value = "published")
-    var published: Boolean
+    var published: Boolean,
+    @field:Column(value = "content")
+    var content: String?
 ) : Entity() {
 }

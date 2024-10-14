@@ -1,3 +1,4 @@
+begin;
 create table if not exists icon(
    id uuid primary key,
    name text not null,
@@ -42,3 +43,4 @@ create table if not exists posts_table_of_contents(
     constraint fk_posts_table_of_contents_on_post foreign key(posts_id) references posts(id),
     constraint fk_posts_table_of_contents_on_table_of_contents foreign key(table_of_contents_id) references table_of_contents(id)
 );
+end;

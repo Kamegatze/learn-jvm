@@ -2,6 +2,9 @@ package com.kamegatze.learnjvm.configuration
 
 
 import com.kamegatze.learnjvm.model.db.Entity
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.parser.Parser
+import com.vladsch.flexmark.util.data.MutableDataSet
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.relational.core.mapping.event.BeforeConvertCallback
@@ -23,4 +26,14 @@ class BeanConfig {
             minion
         }
     }
+
+    @Bean
+    fun mutableDataSet(): MutableDataSet = MutableDataSet()
+
+    @Bean
+    fun markDownParser(options: MutableDataSet): Parser = Parser.builder(options).build()
+
+    @Bean
+    fun markDownHtmlRender(options: MutableDataSet): HtmlRenderer = HtmlRenderer.builder(options).build()
+
 }

@@ -13,22 +13,11 @@
             <article class="row h-100 article">
                 <div class="col s4"></div>
                 <div class="col s4 card">
-                    <h5 class="center-align" th:text="${article.label}"></h5>
+                    <h5 class="center-align" th:utext="${article.label}"></h5>
                     <br>
                     <div>
-                        <h6>Содержание:</h6>
-                        <ul>
-                            <li th:each="chapter, item : ${article.chapters}">
-                                <a th:href="${'#' + chapter.label}" th:text="${item.index + 1 + '. ' + chapter.label}"></a>
-                            </li>
-                        </ul>
+                        [(${article.content})]
                     </div>
-                    <th:block th:each="chapter, item : ${article.chapters}">
-                        <br>
-                        <h6 th:id="${chapter.label}" th:text="${chapter.label}"></h6>
-                        <br>
-                        <p th:text="${chapter.content}"></p>
-                    </th:block>
                 </div>
                 <div class="col s4"></div>
             </article>

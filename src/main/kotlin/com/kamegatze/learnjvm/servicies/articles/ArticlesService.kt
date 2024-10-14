@@ -3,6 +3,7 @@ package com.kamegatze.learnjvm.servicies.articles
 import com.kamegatze.learnjvm.model.articles.Article
 import com.kamegatze.learnjvm.model.db.users.Users
 import org.springframework.data.domain.Pageable
+import org.springframework.web.multipart.MultipartFile
 import java.util.UUID
 
 interface ArticlesService {
@@ -22,4 +23,6 @@ interface ArticlesService {
     fun findAllPageable(pageable: Pageable): List<Article>
 
     fun delete(id: UUID)
+
+    fun save(file: MultipartFile, label: String, userId: UUID)
 }

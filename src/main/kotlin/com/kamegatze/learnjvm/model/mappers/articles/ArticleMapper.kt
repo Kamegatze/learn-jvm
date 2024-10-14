@@ -9,7 +9,7 @@ import org.mapstruct.Mapping
 @Mapper(config = MapstructConfig::class)
 interface ArticleMapper {
 
-    @Mapping(target = "chapters", ignore = true)
+
     fun postsToArticle(entity: Posts): Article
 
     fun articleToPosts(article: Article): Posts
