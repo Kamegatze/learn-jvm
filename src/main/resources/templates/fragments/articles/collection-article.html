@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title" th:text="${article.label}"></span>
-                    <p class="truncate-text" data-count-line="8" th:text="${@htmlConvectorImpl.toFirstAttributeToText('p', article.content)}"></p>
+                    <p class="truncate-text transfer-word" data-count-line="8" th:text="${@htmlConvectorImpl.toFirstAttributeToText('p', article.content)}"></p>
                 </div>
                 <div class="card-action d-flex">
                     <a class="btn waves-effect waves-light" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>

@@ -7,6 +7,8 @@ import com.kamegatze.learnjvm.model.mappers.articles.ArticleMapper
 import com.kamegatze.learnjvm.repositories.articles.posts.PostsRepository
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService
 import com.kamegatze.learnjvm.utils.MarkDownConverter
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -46,9 +48,19 @@ class ArticlesServiceImpl(
         return  articleMapper.postsToArticle(post)
     }
 
-    override fun findAllByUserPageable(users: Users, pageable: Pageable): List<Article> {
-        val posts = postsRepository.findAllByUserId(users.id!!, pageable).content
+    override fun findAllByUserPageable(users: Users, pageable: Pageable): Page<Article> {
+        val posts = postsRepository.findAllByUserId(users.id!!, pageable)
+        return PageImpl(articleMapper.mapToArticles(posts.content), posts.pageable, posts.totalElements)
+    }
+
+    override fun findAllByArticlesAndUser(user: Users, searchName: String): List<Article> {
+        val posts = postsRepository.findAllByUserIdAndLabelContaining(user.id!!, searchName)
         return articleMapper.mapToArticles(posts)
+    }
+
+    override fun findAllByArticlesAndUserPageable(user: Users, searchName: String, pageable: Pageable): Page<Article> {
+        val posts = postsRepository.findAllByUserIdAndLabelContaining(user.id!!, searchName, pageable)
+        return PageImpl(articleMapper.mapToArticles(posts.content), posts.pageable, posts.totalElements)
     }
 
     override fun findAllByUser(users: Users): List<Article> {

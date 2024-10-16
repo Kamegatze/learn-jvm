@@ -21,6 +21,10 @@
         <th:block th:replace="~{fragments/footer :: footer}"></th:block>
     </div>
     <script>
+        document.querySelectorAll(".transfer-word").forEach(item => {
+            item.textContent = transferText(item)
+        })
+
         document.querySelectorAll(".truncate-text").forEach(item => {
             item.textContent = truncateText(item)
         })

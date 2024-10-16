@@ -12,4 +12,8 @@ interface PostsRepository : CrudRepository<Posts, UUID>, PagingAndSortingReposit
     fun findAllByUserId(userId: UUID): List<Posts>
 
     fun findAllByUserId(userId: UUID, pageable: Pageable): Page<Posts>
+
+    fun findAllByUserIdAndLabelContaining(userId: UUID, label: String): List<Posts>
+
+    fun findAllByUserIdAndLabelContaining(userId: UUID, label: String, pageable: Pageable): Page<Posts>
 }

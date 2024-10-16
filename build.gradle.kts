@@ -44,7 +44,7 @@ dependencies {
     implementation("org.mapstruct.extensions.spring:mapstruct-spring-annotations:$mapstructSpringAnnotation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
-    implementation("com.vladsch.flexmark:flexmark:$flexmark")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexmark")
     implementation("org.jsoup:jsoup:$jsoup")
     implementation("org.mapstruct:mapstruct:$mapstruct")
     kapt("org.mapstruct:mapstruct-processor:$mapstruct")

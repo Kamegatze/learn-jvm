@@ -13,7 +13,7 @@
                 <div class="card-content">
                     <form class="d-flex aligns-items-flex-end" action="#" th:action="@{/articles/search-by-name}" method="get">
                         <div class="input-field flex-grow-1">
-                            <input class="validate" type="text" id="search-input" th:name="${searchName}">
+                            <input class="validate" type="text" id="search-input" th:name="${searchName}" th:value="${searchValue}">
                             <label for="search-input">Поиск по статьям</label>
                         </div>
                         <div class="input-field ms-3">
