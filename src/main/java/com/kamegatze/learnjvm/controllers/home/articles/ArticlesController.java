@@ -4,7 +4,9 @@ import com.kamegatze.learnjvm.configuration.props.app.AppNamesProps;
 import com.kamegatze.learnjvm.configuration.security.details.UsersDetails;
 import com.kamegatze.learnjvm.model.articles.Article;
 import com.kamegatze.learnjvm.model.db.users.Users;
+import com.kamegatze.learnjvm.model.generation.url.Parameters;
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService;
+import com.kamegatze.learnjvm.utils.GenerationUrlPage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +18,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/articles")
 public class ArticlesController {
     private final ArticlesService articlesService;
     private final AppNamesProps appNamesProps;
+    private final GenerationUrlPage generationUrlPage;
 
-    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps) {
+    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps, GenerationUrlPage generationUrlPage) {
         this.articlesService = articlesService;
         this.appNamesProps = appNamesProps;
+        this.generationUrlPage = generationUrlPage;
     }
 
     @GetMapping("/create")
@@ -57,10 +62,17 @@ public class ArticlesController {
         final Page<Article> articlesByUser = Objects.isNull(searchValue) || searchValue.isEmpty() || searchValue.isBlank() ?
                 articlesService.findAllByUserPageable(user, pageable):
                 articlesService.findAllByArticlesAndUserPageable(user, searchValue, pageable);
+        final Parameters parameters = Parameters.build()
+                        .url("/articles/all-articles-by-user")
+                        .countPage(articlesByUser.getTotalPages())
+                        .pageSize(pageable.getPageSize())
+                        .sort(pageable.getSort())
+                        .queryStaticParams(new String[]{appNamesProps.getSearchFieldName(), searchValue});
 
         model.addAttribute("articles", articlesByUser);
         model.addAttribute("searchName", appNamesProps.getSearchFieldName());
         model.addAttribute("searchValue", searchValue);
+        model.addAttribute("urls", generationUrlPage.generation(parameters));
         return "articles/all-articles-by-user";
     }
 
@@ -98,7 +110,10 @@ public class ArticlesController {
 
     @GetMapping("/search-by-name")
     String handlingSearchByName(@RequestParam(value = "#{appNamesProps.searchFieldName}", required = true) String searchValue, Pageable pageable) {
-        return String.format("redirect:/articles/all-articles-by-user?page=%s&size=%s&%s=%s", pageable.getPageNumber(), pageable.getPageSize(),
-                appNamesProps.getSearchFieldName(), searchValue);
+        String sort = pageable.getSort().stream().map(it -> String.format("sort=%s,%s", it.getProperty(), it.getDirection().name().toLowerCase()))
+                .collect(Collectors.joining("&"));
+        sort = sort.isEmpty() ? "" : String.format("&%s", sort);
+        return String.format("redirect:/articles/all-articles-by-user?page=%s&size=%s&%s=%s%s", pageable.getPageNumber(), pageable.getPageSize(),
+                appNamesProps.getSearchFieldName(), searchValue, sort);
     }
 }

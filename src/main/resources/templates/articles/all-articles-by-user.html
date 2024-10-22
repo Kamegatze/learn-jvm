@@ -18,7 +18,7 @@
                 <th:block th:replace="~{fragments/articles/not-found-article :: not-found-article}"></th:block>
             </th:block>
             <th:block th:replace="~{fragments/pagination :: pagination(${articles.isFirst()}, ${articles.isLast()}, ${articles.getNumber()},
-                ${articles.getTotalPages()}, ${articles.getSize()})}"></th:block>
+                ${articles.getTotalPages()}, ${articles.getSize()}, ${urls})}"></th:block>
         </div>
         <th:block th:replace="~{fragments/footer :: footer}"></th:block>
     </div>

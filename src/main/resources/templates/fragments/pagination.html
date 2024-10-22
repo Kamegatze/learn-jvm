@@ -5,16 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<th:block th:fragment="pagination(isFirst, isLast, number, totalPages, size)">
+<th:block th:fragment="pagination(isFirst, isLast, number, totalPages, size, urls)">
     <ul class="pagination">
         <li th:class="${isFirst ? 'disabled' : 'waves-effect'}">
-            <a th:href="${'/articles/all-articles-by-user?page=' + (number - 1) + '&size=' + size}"><i class="material-icons">chevron_left</i></a>
+            <a th:href="${isFirst ? '' : urls.get(number - 1)}"><i class="material-icons">chevron_left</i></a>
         </li>
-        <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-            <li th:class="${number == i ? 'active': 'waves-effect'}"><a th:text="${i + 1}" th:href="${'/articles/all-articles-by-user?page=' + i + '&size=' + size}"></a></li>
+        <th:block th:each="url, item : ${urls}">
+            <li th:class="${number == item.index ? 'active': 'waves-effect'}"><a th:text="${item.index + 1}" th:href="${url}"></a></li>
         </th:block>
         <li th:class="${isLast ? 'disabled' : 'waves-effect'}">
-            <a th:href="${'/articles/all-articles-by-user?page=' + (number + 1) + '&size=' + size}"><i class="material-icons">chevron_right</i></a>
+            <a th:href="${isLast ? '' : urls.get(number + 1)}"><i class="material-icons">chevron_right</i></a>
         </li>
     </ul>
 </th:block>
