@@ -15,6 +15,8 @@
                         <div class="input-field flex-grow-1">
                             <input class="validate" type="text" id="search-input" th:name="${searchName}" th:value="${searchValue}">
                             <label for="search-input">Поиск по статьям</label>
+                            <input type="hidden" name="page" value="0">
+                            <input type="hidden" name="size" value="10">
                         </div>
                         <div class="input-field ms-3">
                             <button type="submit" class="btn-floating waves-effect waves-light"><i class="material-icons">search</i></button>

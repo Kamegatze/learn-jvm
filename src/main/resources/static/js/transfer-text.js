@@ -9,7 +9,7 @@ const transferText = (tag) => {
 
     const width = tag.offsetWidth
     const sizeSign = parseInt(window.getComputedStyle(tag, null).getPropertyValue("font-size"))
-    return tag.textContent.split(" ")
+    return tag.textContent.split("- ").join("").split(" ")
         .map(word => transferTextInsert(word, width, sizeSign))
         .join(" ")
 }

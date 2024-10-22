@@ -1,5 +1,4 @@
 plugins {
-    kotlin("kapt") version "1.7.21"
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.3.3"
@@ -47,7 +46,7 @@ dependencies {
     implementation("com.vladsch.flexmark:flexmark-all:$flexmark")
     implementation("org.jsoup:jsoup:$jsoup")
     implementation("org.mapstruct:mapstruct:$mapstruct")
-    kapt("org.mapstruct:mapstruct-processor:$mapstruct")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
