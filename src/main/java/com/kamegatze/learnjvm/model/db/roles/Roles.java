@@ -1,29 +1,43 @@
 package com.kamegatze.learnjvm.model.db.roles;
 
-import com.kamegatze.learnjvm.model.db.Entity;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.kamegatze.learnjvm.model.db.users.Users;
+import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import java.util.List;
 import java.util.UUID;
 
-@Table(value = "roles")
-public class Roles extends Entity {
-    @Column(value = "name")
-    private String name;
+@Entity
+@Table(name = "roles")
+public class Roles extends AbstractPersistable<UUID> {
+    @Column(name = "name")
+    @Enumerated(EnumType.STRING)
+    private ERoles name;
+
+    @OneToMany(mappedBy = "role")
+    private List<Users> users;
 
     public Roles() {
     }
 
-    public Roles(UUID id, String name) {
+    public Roles(UUID id, ERoles name) {
         this.setId(id);
         this.name = name;
     }
 
-    public String getName() {
+    public ERoles getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(ERoles name) {
         this.name = name;
+    }
+
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
     }
 }

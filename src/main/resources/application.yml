@@ -17,11 +17,6 @@ spring:
     validate-on-migrate: true
     default-schema: public
 
-  context:
-    component-classes:
-      register:
-
-
 logging:
   level:
     org:

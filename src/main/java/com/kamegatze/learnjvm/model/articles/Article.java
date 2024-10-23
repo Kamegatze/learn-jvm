@@ -1,11 +1,13 @@
 package com.kamegatze.learnjvm.model.articles;
 
+import com.kamegatze.learnjvm.model.db.users.Users;
+
 import java.time.Instant;
 import java.util.UUID;
 
 public class Article {
     private UUID id;
-    private UUID userId;
+    private Users users;
     private String label;
     private Instant createdAt;
     private Instant updatedAt;
@@ -15,10 +17,10 @@ public class Article {
     public Article() {
     }
 
-    public Article(UUID id, UUID userId, String label, Instant createdAt,
+    public Article(UUID id, Users users, String label, Instant createdAt,
                    Instant updatedAt, Boolean published, String content) {
         this.id = id;
-        this.userId = userId;
+        this.users = users;
         this.label = label;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -39,12 +41,12 @@ public class Article {
         this.id = id;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public String getLabel() {

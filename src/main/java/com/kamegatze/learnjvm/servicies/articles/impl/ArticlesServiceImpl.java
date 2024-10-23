@@ -8,7 +8,6 @@ import com.kamegatze.learnjvm.repository.articles.posts.PostsRepository;
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService;
 import com.kamegatze.learnjvm.utils.MarkDownConverter;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +40,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Override
     public Article getById(UUID id) {
         final Posts post = postsRepository.findById(id).orElseThrow();
-        return  articleMapper.postsToArticle(post);
+        return articleMapper.postsToArticle(post);
     }
 
     @Override
@@ -68,19 +67,19 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public List<Article> findAll() {
-        final Iterable<Posts> posts = postsRepository.findAll();
-        return articleMapper.mapToArticles((List<Posts>) posts);
+        final List<Posts> posts = postsRepository.findAll();
+        return articleMapper.mapToArticles(posts);
     }
 
     @Override
     public List<Article> findAllByUser(Users users) {
-        final List<Posts> posts = postsRepository.findAllByUserId(users.getId());
+        final List<Posts> posts = postsRepository.findAllByUsers(users);
         return articleMapper.mapToArticles(posts);
     }
 
     @Override
     public Page<Article> findAllByUserPageable(Users users, Pageable pageable) {
-        final Page<Posts> posts = postsRepository.findAllByUserId(users.getId(), pageable);
+        final Page<Posts> posts = postsRepository.findAllByUsers(users, pageable);
         return posts.map(articleMapper::postsToArticle);
     }
 
@@ -97,12 +96,12 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public void save(MultipartFile file, String label, UUID userId) {
+    public void save(MultipartFile file, String label, Users users) {
         final String content;
         try {
             content = new String(file.getBytes(), StandardCharsets.UTF_8);
-            final Article article = new  Article(label, content);
-            article.setUserId(userId);
+            final Article article = new Article(label, content);
+            article.setUsers(users);
             save(article);
         } catch (IOException e) {
             throw new RuntimeException("Error read file");
@@ -111,15 +110,13 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public List<Article> findAllByArticlesAndUser(Users user, String searchName) {
-        final String search = searchName.trim().toLowerCase();
-        final List<Posts> posts = postsRepository.findAllByUserIdAndLabelContaining(user.getId(), search);
+        final List<Posts> posts = postsRepository.findAllByUsersAndLabelContaining(user, searchName);
         return articleMapper.mapToArticles(posts);
     }
 
     @Override
     public Page<Article> findAllByArticlesAndUserPageable(Users user, String searchName, Pageable pageable) {
-        final String search = searchName.trim().toLowerCase();
-        final List<Posts> posts = postsRepository.findAllByUserIdAndLabelContaining(user.getId(), search, pageable);
-        return new PageImpl<>(articleMapper.mapToArticles(posts), pageable, postsRepository.countByUserIdAndLabelContaining(user.getId(), search));
+        final Page<Posts> posts = postsRepository.findAllByUsersAndLabelContaining(user, searchName, pageable);
+        return posts.map(articleMapper::postsToArticle);
     }
 }

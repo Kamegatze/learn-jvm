@@ -1,34 +1,36 @@
 package com.kamegatze.learnjvm.model.db.posts;
 
-import com.kamegatze.learnjvm.model.db.Entity;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.kamegatze.learnjvm.model.db.users.Users;
+import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@Table(value = "posts")
-public class Posts extends Entity {
-    @Column(value = "user_id")
-    private UUID userId;
-    @Column(value = "label")
+@Entity
+@Table(name = "posts")
+public class Posts extends AbstractPersistable<UUID> {
+    @Column(name = "label")
     private String label;
-    @Column(value = "created_at")
+    @Column(name = "created_at")
     private Instant createdAt;
-    @Column(value = "updated_at")
+    @Column(name = "updated_at")
     private Instant updatedAt;
-    @Column(value = "published")
+    @Column(name = "published")
     private Boolean published;
-    @Column(value = "content")
+    @Column(name = "content")
     private String content;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private Users users;
 
     public Posts() {
     }
 
-    public Posts(UUID id, UUID userId, String label, Instant createdAt, Instant updatedAt,
+    public Posts(UUID id, Users users, String label, Instant createdAt, Instant updatedAt,
                  Boolean published, String content) {
         this.setId(id);
-        this.userId = userId;
+        this.users = users;
         this.label = label;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -36,12 +38,12 @@ public class Posts extends Entity {
         this.content = content;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public Users getUser() {
+        return users;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUser(Users users) {
+        this.users = users;
     }
 
     public String getLabel() {

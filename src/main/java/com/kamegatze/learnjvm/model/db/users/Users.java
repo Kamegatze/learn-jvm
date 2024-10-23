@@ -1,37 +1,47 @@
 package com.kamegatze.learnjvm.model.db.users;
 
-import com.kamegatze.learnjvm.model.db.Entity;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.kamegatze.learnjvm.model.db.icons.Icons;
+import com.kamegatze.learnjvm.model.db.posts.Posts;
+import com.kamegatze.learnjvm.model.db.roles.Roles;
+import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
-@Table(value = "users")
-public class Users extends Entity {
-    @Column(value = "last_name")
+@Entity
+@Table(name = "users")
+public class Users extends AbstractPersistable<UUID> {
+    @Column(name = "last_name")
     private String lastName;
-    @Column(value = "first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(value = "login")
+    @Column(name = "login")
     private String login;
-    @Column(value = "password")
+    @Column(name = "password")
     private String password;
-    @Column(value = "created_at")
+    @Column(name = "created_at")
     private Instant createdAt;
-    @Column(value = "updated_at")
+    @Column(name = "updated_at")
     private Instant updatedAt;
-    @Column(value = "last_authorization")
+    @Column(name = "last_authorization")
     private Instant lastAuthorization;
-    @Column(value = "icon_id")
-    private UUID iconId;
-    @Column(value = "role_id")
-    private UUID roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Roles role;
+    @OneToMany(mappedBy = "users")
+    private List<Posts> posts;
+    @OneToOne
+    @JoinColumn(name = "icon_id", referencedColumnName = "id")
+    private Icons icons;
 
     public Users() {
     }
 
-    public Users(UUID id, String lastName, String firstName, String login, String password, Instant createdAt, Instant updatedAt, Instant lastAuthorization, UUID iconId, UUID roleId) {
+    public Users(UUID id, String lastName, String firstName, String login,
+                 String password, Instant createdAt, Instant updatedAt,
+                 Instant lastAuthorization, Icons icons, Roles role) {
         this.setId(id);
         this.lastName = lastName;
         this.firstName = firstName;
@@ -40,8 +50,32 @@ public class Users extends Entity {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.lastAuthorization = lastAuthorization;
-        this.iconId = iconId;
-        this.roleId = roleId;
+        this.icons = icons;
+        this.role = role;
+    }
+
+    public Icons getIcons() {
+        return icons;
+    }
+
+    public void setIcons(Icons icons) {
+        this.icons = icons;
+    }
+
+    public List<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Posts> posts) {
+        this.posts = posts;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     public String getLastName() {
@@ -98,21 +132,5 @@ public class Users extends Entity {
 
     public void setLastAuthorization(Instant lastAuthorization) {
         this.lastAuthorization = lastAuthorization;
-    }
-
-    public UUID getIconId() {
-        return iconId;
-    }
-
-    public void setIconId(UUID iconId) {
-        this.iconId = iconId;
-    }
-
-    public UUID getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
     }
 }

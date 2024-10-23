@@ -42,7 +42,7 @@ public class ArticlesController {
     @PostMapping("/create")
     String handlingCreateArticle(@ModelAttribute("article")Article article, Authentication authentication) {
         final UsersDetails userDetails = (UsersDetails) authentication.getPrincipal();
-        article.setUserId(userDetails.getUser().getId());
+        article.setUsers(userDetails.getUser());
         articlesService.save(article);
         return "redirect:/articles/all-articles-by-user";
     }
@@ -103,8 +103,8 @@ public class ArticlesController {
     String handlingCreateUploadArticle(@RequestParam("file") MultipartFile file, @RequestParam("label") String label,
                                        Authentication authentication) {
         final UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        final UUID userId = usersDetails.getUser().getId();
-        articlesService.save(file, label, userId);
+        final Users users = usersDetails.getUser();
+        articlesService.save(file, label, users);
         return "redirect:/articles/all-articles-by-user";
     }
 

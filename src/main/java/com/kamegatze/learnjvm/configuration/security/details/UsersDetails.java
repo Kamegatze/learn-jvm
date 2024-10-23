@@ -10,21 +10,15 @@ import java.util.List;
 
 public class UsersDetails implements UserDetails {
     private final Users user;
-    private final String roleName;
     private final Collection<GrantedAuthority> authorities;
 
-    public UsersDetails(Users user, String roleName) {
+    public UsersDetails(Users user) {
         this.user = user;
-        this.roleName = roleName;
-        authorities = List.of(new SimpleGrantedAuthority(roleName));
+        authorities = List.of(new SimpleGrantedAuthority(user.getRole().getName().name()));
     }
 
     public Users getUser() {
         return user;
-    }
-
-    public String getRoleName() {
-        return roleName;
     }
 
     @Override

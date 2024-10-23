@@ -1,37 +1,29 @@
 package com.kamegatze.learnjvm.repository.articles.posts;
 
 import com.kamegatze.learnjvm.model.db.posts.Posts;
+import com.kamegatze.learnjvm.model.db.users.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface PostsRepository extends CrudRepository<Posts, UUID>, PagingAndSortingRepository<Posts, UUID> {
+public interface PostsRepository extends JpaRepository<Posts, UUID> {
 
-    List<Posts> findAllByUserId(UUID userId);
+    List<Posts> findAllByUsers(Users users);
 
-    Page<Posts> findAllByUserId(UUID userId, Pageable pageable);
-
-    @Query("""
-        select * from posts where posts.user_id = :user_id and lower(posts.label) like '%'||:label||'%'
-    """)
-    List<Posts> findAllByUserIdAndLabelContaining(UUID userId, String label);
+    Page<Posts> findAllByUsers(Users users, Pageable pageable);
 
     @Query("""
-        select * from posts where posts.user_id = :user_id and lower(posts.label) like '%'||:label||'%'
-        offset :#{#pageable.getOffset()}
-        limit :#{#pageable.pageSize}
+        select posts from Posts posts where posts.users.id = :#{#user.id} and lower(posts.label) like lower('%'||:label||'%')
     """)
-    List<Posts> findAllByUserIdAndLabelContaining(@Param("user_id") UUID userId, @Param("label")String label, Pageable pageable);
+    List<Posts> findAllByUsersAndLabelContaining(@Param("user") Users users, String label);
 
     @Query("""
-        select count(*) from posts where posts.user_id = :user_id and lower(posts.label) like '%'||:label||'%'
+        select posts from Posts posts where posts.users.id = :#{#user.id} and lower(posts.label) like lower('%'||:label||'%')
     """)
-    Long countByUserIdAndLabelContaining(@Param("user_id") UUID userId, @Param("label") String label);
-
+    Page<Posts> findAllByUsersAndLabelContaining(@Param("user") Users users, @Param("label") String label, Pageable pageable);
 }

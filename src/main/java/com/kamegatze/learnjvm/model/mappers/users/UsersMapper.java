@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 @Mapper(config = MapstructConfig.class)
 public interface UsersMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "iconId", ignore = true)
-    @Mapping(target = "roleId", ignore = true)
+    @Mapping(target = "posts", ignore = true)
+    @Mapping(target = "icons", ignore = true)
     Users mapRegistrationToUser(Registration userRegistration);
 
     @Mapping(target = "retryPassword", ignore = true)

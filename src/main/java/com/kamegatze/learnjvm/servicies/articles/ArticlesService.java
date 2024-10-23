@@ -26,7 +26,7 @@ public interface ArticlesService {
 
     void delete(UUID id);
 
-    void save(MultipartFile file, String label, UUID userId);
+    void save(MultipartFile file, String label, Users users);
 
     List<Article> findAllByArticlesAndUser(Users user, String searchName);
 
