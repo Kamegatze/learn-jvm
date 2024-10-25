@@ -22,8 +22,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RolesRepository rolesRepository;
     private final UsersMapper usersMapper;
 
-    public AuthenticationServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder,
-                                     RolesRepository rolesRepository, UsersMapper usersMapper) {
+    public AuthenticationServiceImpl(UsersRepository usersRepository,
+                                     PasswordEncoder passwordEncoder,
+                                     RolesRepository rolesRepository,
+                                     UsersMapper usersMapper) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.rolesRepository = rolesRepository;

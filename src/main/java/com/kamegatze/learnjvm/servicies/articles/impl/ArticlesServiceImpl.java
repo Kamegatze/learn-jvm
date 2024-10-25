@@ -29,7 +29,9 @@ public class ArticlesServiceImpl implements ArticlesService {
     private final MarkDownConverter markDownConverter;
     private final TransactionTemplate transactionTemplate;
 
-    public ArticlesServiceImpl(PostsRepository postsRepository, ArticleMapper articleMapper, MarkDownConverter markDownConverter,
+    public ArticlesServiceImpl(PostsRepository postsRepository,
+                               ArticleMapper articleMapper,
+                               MarkDownConverter markDownConverter,
                                TransactionTemplate transactionTemplate) {
         this.postsRepository = postsRepository;
         this.articleMapper = articleMapper;

@@ -38,11 +38,11 @@ public class Posts extends AbstractPersistable<UUID> {
         this.content = content;
     }
 
-    public Users getUser() {
+    public Users getUsers() {
         return users;
     }
 
-    public void setUser(Users users) {
+    public void setUsers(Users users) {
         this.users = users;
     }
 

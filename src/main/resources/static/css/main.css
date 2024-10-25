@@ -9,6 +9,9 @@
 .flex-direction-column {
     flex-direction: column;
 }
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
 
 .button-merges-background {
     background: none;

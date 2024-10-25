@@ -9,7 +9,7 @@
     <div class="page">
         <th:block th:replace="~{fragments/header :: header}"></th:block>
         <div class="page-content d-flex aligns-items-center flex-direction-column">
-            <th:block th:replace="~{fragments/articles/bar-search-article :: bar-search-article}"></th:block>
+            <th:block th:replace="~{fragments/articles/bar-search-article :: bar-search-article(${filters}, ${pageName}, ${sizeName}, ${sortName})}"></th:block>
             <!--/*@thymesVar id="articles" type="org.springframework.data.domain.Page<com.kamegatze.learnjvm.model.articles.Article>"*/-->
             <th:block th:if="${!articles.content.isEmpty()}" th:each="article, item : ${articles.content}">
                 <th:block th:replace="~{fragments/articles/collection-article :: collection-article-editor}"></th:block>

@@ -33,5 +33,19 @@ management:
         "[http.server.requests]": true
 
 app:
+  filtering:
+    articles:
+      published:
+        - Сначала не опубликованные
+        - Сначала опубликованные
+        - Сортировка по публикации
+      label:
+        - Сначала по алфавиту
+        - Сначала не по алфавиту
+        - Сортировка по названию
+
   names:
     search-field-name: search
+    sort-name: sort
+    size-name: size
+    page-number-name: page

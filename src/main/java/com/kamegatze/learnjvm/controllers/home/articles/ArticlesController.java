@@ -4,8 +4,10 @@ import com.kamegatze.learnjvm.configuration.props.app.AppNamesProps;
 import com.kamegatze.learnjvm.configuration.security.details.UsersDetails;
 import com.kamegatze.learnjvm.model.articles.Article;
 import com.kamegatze.learnjvm.model.db.users.Users;
+import com.kamegatze.learnjvm.model.filtering.Filter;
 import com.kamegatze.learnjvm.model.generation.url.Parameters;
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService;
+import com.kamegatze.learnjvm.utils.Filtering;
 import com.kamegatze.learnjvm.utils.GenerationUrlPage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,11 +29,13 @@ public class ArticlesController {
     private final ArticlesService articlesService;
     private final AppNamesProps appNamesProps;
     private final GenerationUrlPage generationUrlPage;
+    private final Filtering filtering;
 
-    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps, GenerationUrlPage generationUrlPage) {
+    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps, GenerationUrlPage generationUrlPage, Filtering filtering) {
         this.articlesService = articlesService;
         this.appNamesProps = appNamesProps;
         this.generationUrlPage = generationUrlPage;
+        this.filtering = filtering;
     }
 
     @GetMapping("/create")
@@ -69,10 +74,16 @@ public class ArticlesController {
                         .sort(pageable.getSort())
                         .queryStaticParams(new String[]{appNamesProps.getSearchFieldName(), searchValue});
 
+        List<Filter> filters = filtering.processing(articlesByUser.getPageable().getSort());
+
         model.addAttribute("articles", articlesByUser);
         model.addAttribute("searchName", appNamesProps.getSearchFieldName());
         model.addAttribute("searchValue", searchValue);
+        model.addAttribute("sizeName", appNamesProps.getSizeName());
+        model.addAttribute("sortName", appNamesProps.getSortName());
+        model.addAttribute("pageName", appNamesProps.getPageNumberName());
         model.addAttribute("urls", generationUrlPage.generation(parameters));
+        model.addAttribute("filters", filters);
         return "articles/all-articles-by-user";
     }
 
