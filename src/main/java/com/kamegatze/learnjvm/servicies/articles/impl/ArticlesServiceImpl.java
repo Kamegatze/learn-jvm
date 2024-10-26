@@ -121,4 +121,22 @@ public class ArticlesServiceImpl implements ArticlesService {
         final Page<Posts> posts = postsRepository.findAllByUsersAndLabelContaining(user, searchName, pageable);
         return posts.map(articleMapper::postsToArticle);
     }
+
+    @Override
+    public Article getByIdWithMarkDown(UUID id) {
+        Article article = getById(id);
+        article.setContent(markDownConverter.toMarkDown(article.getContent()));
+        return article;
+    }
+
+    @Override
+    @Transactional
+    public void update(Article article) {
+        postsRepository.findById(article.getId()).ifPresent(posts -> {
+            posts.setLabel(article.getLabel());
+            posts.setContent(markDownConverter.toHtml(article.getContent()));
+            posts.setUpdatedAt(Instant.now());
+            postsRepository.save(posts);
+        });
+    }
 }

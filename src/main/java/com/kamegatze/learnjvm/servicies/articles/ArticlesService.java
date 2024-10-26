@@ -31,4 +31,8 @@ public interface ArticlesService {
     List<Article> findAllByArticlesAndUser(Users user, String searchName);
 
     Page<Article> findAllByArticlesAndUserPageable(Users user, String searchName, Pageable pageable);
+
+    Article getByIdWithMarkDown(UUID id);
+
+    void update(Article article);
 }

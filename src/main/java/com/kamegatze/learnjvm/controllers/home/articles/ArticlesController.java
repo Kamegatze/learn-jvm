@@ -6,9 +6,11 @@ import com.kamegatze.learnjvm.model.articles.Article;
 import com.kamegatze.learnjvm.model.db.users.Users;
 import com.kamegatze.learnjvm.model.filtering.Filter;
 import com.kamegatze.learnjvm.model.generation.url.Parameters;
+import com.kamegatze.learnjvm.repository.articles.posts.PostsRepository;
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService;
 import com.kamegatze.learnjvm.utils.Filtering;
 import com.kamegatze.learnjvm.utils.GenerationUrlPage;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +32,14 @@ public class ArticlesController {
     private final AppNamesProps appNamesProps;
     private final GenerationUrlPage generationUrlPage;
     private final Filtering filtering;
+    private final PostsRepository postsRepository;
 
-    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps, GenerationUrlPage generationUrlPage, Filtering filtering) {
+    public ArticlesController(ArticlesService articlesService, AppNamesProps appNamesProps, GenerationUrlPage generationUrlPage, Filtering filtering, PostsRepository postsRepository) {
         this.articlesService = articlesService;
         this.appNamesProps = appNamesProps;
         this.generationUrlPage = generationUrlPage;
         this.filtering = filtering;
+        this.postsRepository = postsRepository;
     }
 
     @GetMapping("/create")
@@ -45,7 +49,7 @@ public class ArticlesController {
     }
 
     @PostMapping("/create")
-    String handlingCreateArticle(@ModelAttribute("article")Article article, Authentication authentication) {
+    String handlingCreateArticle(@ModelAttribute("article") @Valid Article article, Authentication authentication) {
         final UsersDetails userDetails = (UsersDetails) authentication.getPrincipal();
         article.setUsers(userDetails.getUser());
         articlesService.save(article);
@@ -89,8 +93,15 @@ public class ArticlesController {
 
     @GetMapping("/edit/{id}")
     String handlingEditArticle(@PathVariable("id") UUID id, Model model) {
-        model.addAttribute("article", articlesService.getById(id));
+        model.addAttribute("article", articlesService.getByIdWithMarkDown(id));
         return "/articles/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    String handlingEdit(@ModelAttribute("article") @Valid Article article, @PathVariable("id") UUID id) {
+        article.setId(id);
+        articlesService.update(article);
+        return "redirect:/articles/all-articles-by-user?page=0&size=5";
     }
 
     @PostMapping("/published/{id}")
@@ -102,7 +113,7 @@ public class ArticlesController {
     @PostMapping("/delete/{id}")
     String handlingDeleteArticle(@PathVariable("id") UUID id) {
         articlesService.delete(id);
-        return "redirect:/articles/all-articles-by-user";
+        return "redirect:/articles/all-articles-by-user?page=0&size=5";
     }
 
     @GetMapping("/create/upload")
@@ -116,7 +127,7 @@ public class ArticlesController {
         final UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
         final Users users = usersDetails.getUser();
         articlesService.save(file, label, users);
-        return "redirect:/articles/all-articles-by-user";
+        return "redirect:/articles/all-articles-by-user?page=0&size=5";
     }
 
     @GetMapping("/search-by-name")
