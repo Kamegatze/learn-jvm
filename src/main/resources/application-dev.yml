@@ -1,11 +1,11 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://192.168.1.103:5432/learn-jvm
+    username: ${USERNAME_DATABASE_NODE_DEV:postgres}
+    password: ${PASSWORD_DATABASE_NODE_DEV:postgres}
+    url: jdbc:postgresql://${IP_NODE_DATABASE_DEV:192.168.1.103}:${PORT_NODE_DATABASE_DEV:5432}/learn-jvm
 
 logging:
   level:
     org:
-      springframework: debug
+      springframework: info
