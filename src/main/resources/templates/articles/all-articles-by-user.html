@@ -12,7 +12,7 @@
             <th:block th:replace="~{fragments/articles/bar-search-article :: bar-search-article(${filters}, ${pageName}, ${sizeName}, ${sortName})}"></th:block>
             <!--/*@thymesVar id="articles" type="org.springframework.data.domain.Page<com.kamegatze.learnjvm.model.articles.Article>"*/-->
             <th:block th:unless="${articles.content.isEmpty()}" th:each="article, item : ${articles.content}">
-                <th:block th:replace="~{fragments/articles/collection-article :: collection-article-editor}"></th:block>
+                <th:block th:replace="~{fragments/articles/collection-article :: collection-article-editor(${article})}"></th:block>
             </th:block>
             <th:block th:if="${articles.content.isEmpty()}">
                 <th:block th:replace="~{fragments/articles/not-found-article :: not-found-article}"></th:block>
