@@ -49,6 +49,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     public void save(Article article) {
         transactionTemplate.execute ((status) -> {
             article.setCreatedAt(Instant.now());
+            article.setPublished(false);
             article.setContent(markDownConverter.toHtml(article.getContent()));
             final Posts post = articleMapper.articleToPosts(article);
             return postsRepository.save(post);

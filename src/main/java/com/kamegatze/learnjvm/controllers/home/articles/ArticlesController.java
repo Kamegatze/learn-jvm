@@ -1,7 +1,7 @@
 package com.kamegatze.learnjvm.controllers.home.articles;
 
 import com.kamegatze.learnjvm.configuration.props.app.AppNamesProps;
-import com.kamegatze.learnjvm.configuration.security.details.UsersDetails;
+import com.kamegatze.learnjvm.configuration.security.details.UserDetails;
 import com.kamegatze.learnjvm.model.articles.Article;
 import com.kamegatze.learnjvm.model.db.users.Users;
 import com.kamegatze.learnjvm.model.filtering.Filter;
@@ -50,7 +50,7 @@ public class ArticlesController {
 
     @PostMapping("/create")
     String handlingCreateArticle(@ModelAttribute("article") @Valid Article article, Authentication authentication) {
-        final UsersDetails userDetails = (UsersDetails) authentication.getPrincipal();
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         article.setUsers(userDetails.getUser());
         articlesService.save(article);
         return "redirect:/articles/all-articles-by-user";
@@ -67,7 +67,7 @@ public class ArticlesController {
                                         Authentication authentication,
                                         @RequestParam(value = "#{appNamesProps.searchFieldName}", required = false) String searchValue,
                                         Pageable pageable) {
-        final Users user = ((UsersDetails)authentication.getPrincipal()).getUser();
+        final Users user = ((UserDetails)authentication.getPrincipal()).getUser();
         final Page<Article> articlesByUser = Objects.isNull(searchValue) || searchValue.isEmpty() || searchValue.isBlank() ?
                 articlesService.findAllByUserPageable(user, pageable):
                 articlesService.findAllByArticlesAndUserPageable(user, searchValue, pageable);
@@ -124,8 +124,8 @@ public class ArticlesController {
     @PostMapping("/create/upload")
     String handlingCreateUploadArticle(@RequestParam("file") MultipartFile file, @RequestParam("label") String label,
                                        Authentication authentication) {
-        final UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        final Users users = usersDetails.getUser();
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        final Users users = userDetails.getUser();
         articlesService.save(file, label, users);
         return "redirect:/articles/all-articles-by-user?page=0&size=5";
     }
