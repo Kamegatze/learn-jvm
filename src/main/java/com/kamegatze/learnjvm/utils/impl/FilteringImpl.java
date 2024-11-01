@@ -13,19 +13,14 @@ import java.util.Objects;
 public class FilteringImpl implements Filtering {
 
     private final FilteringConfiguration filteringConfiguration;
-    private final List<Filter> filtersFromConfig;
 
     public FilteringImpl(FilteringConfiguration filteringConfiguration) {
         this.filteringConfiguration = filteringConfiguration;
-        this.filtersFromConfig = filteringConfiguration.getArticles().entrySet().stream().map(
-                        it -> new Filter((Sort.Direction) null, it.getKey(), it.getValue().getFirst(),
-                                it.getValue().get(1), it.getValue().getLast())
-                ).toList();
     }
 
     @Override
     public List<Filter> processing(final Sort sort) {
-        List<Filter> filters = filtersFromConfig.stream().map(Filter::clone).toList();
+        List<Filter> filters = getActualFilterWithLocale();
         sort.stream().forEach(it ->
             filters.stream().filter(item -> Objects.equals(item.getProperty(), it.getProperty()))
                 .findAny().ifPresent(filter -> {
@@ -35,5 +30,13 @@ public class FilteringImpl implements Filtering {
         );
 
         return filters;
+    }
+
+    private List<Filter> getActualFilterWithLocale() {
+        filteringConfiguration.uploadArticles();
+        return filteringConfiguration.getArticles().entrySet().stream().map(
+                it -> new Filter((Sort.Direction) null, it.getKey(), it.getValue().getFirst(),
+                        it.getValue().get(1), it.getValue().getLast())
+        ).toList();
     }
 }

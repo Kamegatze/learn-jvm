@@ -15,7 +15,7 @@
                         <img th:src="@{/static/image/images/not-found.png}" alt="Not found page">
                     </div>
                     <div class="card-content">
-                        <p>Error 404 ops... Not found page</p>
+                        <p th:text="#{error.message.not.found}"></p>
                     </div>
                 </div>
             </div>

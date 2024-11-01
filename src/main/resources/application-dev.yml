@@ -1,3 +1,7 @@
+server:
+  port: 8081
+
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -8,4 +12,14 @@ spring:
 logging:
   level:
     org:
-      springframework: info
+      springframework: debug
+
+management:
+  endpoints.web.exposure.include:
+  endpoint:
+    prometheus:
+      enabled: false
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": false

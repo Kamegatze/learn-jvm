@@ -14,7 +14,7 @@
                     <div class="card-content d-flex aligns-items-flex-end">
                         <div class="input-field flex-grow-1">
                             <input class="validate" type="text" id="search-input" th:name="${searchName}" th:value="${searchValue}">
-                            <label for="search-input">Поиск по статьям</label>
+                            <label th:text="#{articles.search.by.article}" for="search-input"></label>
                             <input type="hidden" th:name="${pageName}" value="0">
                             <input type="hidden" th:name="${sizeName}" value="5">
                         </div>
@@ -23,21 +23,21 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <a class="btn waves-effect waves-light center-align" th:href="@{/articles/create}">Создать статью</a>
-                        <a class="btn waves-effect waves-light center-align" th:href="@{/articles/create/upload}">Загрузить статью</a>
+                        <a th:text="#{articles.create.article}" class="btn waves-effect waves-light center-align" th:href="@{/articles/create}"></a>
+                        <a th:text="#{articles.upload.article}" class="btn waves-effect waves-light center-align" th:href="@{/articles/create/upload}"></a>
                     </div>
                 </div>
                 <ul class="collapsible">
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">filter_list</i>
-                            Filters
+                            <span th:text="#{filter.value}"></span>
                         </div>
                         <div class="collapsible-body">
                             <!--/*@thymesVar id="filter" type="com.kamegatze.learnjvm.model.filtering.Filter"*/-->
                             <div th:each="filter, item : ${filters}" class="input-field">
                                 <select id="select-published" th:name="${sortName}">
-                                    <option th:selected="${filter.direction.isEmpty()}" value="">Без сортировки</option>
+                                    <option th:selected="${filter.direction.isEmpty()}" value="" th:text="#{select.empty.value}"></option>
                                     <option th:selected="${filter.direction == 'asc'}" th:value="${filter.property + ',asc'}" th:text="${filter.nameAsc}"></option>
                                     <option th:selected="${filter.direction == 'desc'}" th:value="${filter.property + ',desc'}" th:text="${filter.nameDesc}"></option>
                                 </select>
