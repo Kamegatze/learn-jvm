@@ -19,8 +19,8 @@ public class FilteringImpl implements Filtering {
     }
 
     @Override
-    public List<Filter> processing(final Sort sort) {
-        List<Filter> filters = getActualFilterWithLocale();
+    public List<Filter> processing(final Sort sort, final List<String> propertiesPass) {
+        List<Filter> filters = getActualFilterWithLocale(propertiesPass);
         sort.stream().forEach(it ->
             filters.stream().filter(item -> Objects.equals(item.getProperty(), it.getProperty()))
                 .findAny().ifPresent(filter -> {
@@ -32,9 +32,11 @@ public class FilteringImpl implements Filtering {
         return filters;
     }
 
-    private List<Filter> getActualFilterWithLocale() {
+    private List<Filter> getActualFilterWithLocale(List<String> propertiesPass) {
         filteringConfiguration.uploadArticles();
-        return filteringConfiguration.getArticles().entrySet().stream().map(
+        return filteringConfiguration.getArticles().entrySet().stream()
+                .filter(it -> !propertiesPass.contains(it.getKey()))
+                .map(
                 it -> new Filter((Sort.Direction) null, it.getKey(), it.getValue().getFirst(),
                         it.getValue().get(1), it.getValue().getLast())
         ).toList();

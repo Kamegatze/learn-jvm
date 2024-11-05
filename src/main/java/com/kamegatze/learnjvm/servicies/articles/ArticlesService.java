@@ -24,6 +24,14 @@ public interface ArticlesService {
 
     Page<Article> findAllPageable(Pageable pageable);
 
+    Page<Article> findAllByArticleAndPublished(Pageable pageable, String searchName, Boolean published);
+
+    List<Article> findAllByArticleAndPublished(String searchName, Boolean published);
+
+    Page<Article> findAllByPublished(Boolean published, Pageable pageable);
+
+    List<Article> findAllByPublished(Boolean published);
+
     void delete(UUID id);
 
     void save(MultipartFile file, String label, Users users);

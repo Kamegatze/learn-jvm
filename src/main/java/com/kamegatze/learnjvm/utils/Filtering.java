@@ -6,5 +6,5 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface Filtering {
-    List<Filter> processing(final Sort sort);
+    List<Filter> processing(final Sort sort, final List<String> propertiesPass);
 }

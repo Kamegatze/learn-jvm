@@ -93,6 +93,30 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
+    public Page<Article> findAllByArticleAndPublished(Pageable pageable, String searchName, Boolean published) {
+        Page<Posts> posts = postsRepository.findAllByLabelContainingAndPublished(searchName, published, pageable);
+        return posts.map(articleMapper::postsToArticle);
+    }
+
+    @Override
+    public List<Article> findAllByArticleAndPublished(String searchName, Boolean published) {
+        List<Posts> posts = postsRepository.findAllByLabelContaining(searchName, published);
+        return posts.stream().map(articleMapper::postsToArticle).toList();
+    }
+
+    @Override
+    public Page<Article> findAllByPublished(Boolean published, Pageable pageable) {
+        Page<Posts> posts = postsRepository.findAllByPublished(published, pageable);
+        return posts.map(articleMapper::postsToArticle);
+    }
+
+    @Override
+    public List<Article> findAllByPublished(Boolean published) {
+        List<Posts> posts = postsRepository.findAllByPublished(published);
+        return posts.stream().map(articleMapper::postsToArticle).toList();
+    }
+
+    @Override
     @Transactional
     public void delete(UUID id) {
         postsRepository.deleteById(id);

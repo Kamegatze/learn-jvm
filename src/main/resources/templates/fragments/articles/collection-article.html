@@ -6,7 +6,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="filter" type="com.kamegatze.learnjvm.model.articles.Article"*/-->
-<th:block th:fragment="collection-article-editor(article)">
+<th:block th:fragment="collection-article-editor(article, urlSearch)">
     <div class="row container">
         <div class="col s3"></div>
         <div class="col s6">
@@ -17,19 +17,21 @@
                 </div>
                 <div class="card-action d-flex">
                     <a class="btn waves-effect waves-light tooltipped" data-tooltip="Подробнее" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>
-                    <div class="flex-grow-1"></div>
-                    <div class="switch align-self-center tooltipped" data-tooltip="Опубликовать">
-                        <label>
-                            <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/published/{id}((id=${article.id}))}" method="post" onchange="changeStateCheckbox(this)">
-                                <input th:if="${article.published}" checked class="switch-input" type="checkbox">
-                                <input th:unless="${article.published}" class="switch-input" type="checkbox">
-                                <span class="lever"></span>
-                                <span class="mt-2">опубликовать</span>
-                            </form>
-                        </label>
-                    </div>
-                    <a th:href="@{/articles/edit/{id}(id=${article.id})}" data-tooltip="Редактировать" class="btn-large btn-floating waves-circle waves-light blue ms-3 tooltipped"><i class="material-icons">edit</i></a>
-                    <a href="#remove-modal" data-tooltip="Удалить" class="btn-large btn-floating waves-circle waves-light red ms-3 tooltipped modal-trigger"><i class="material-icons">delete</i></a>
+                    <th:block th:if="${urlSearch eq '/articles/search-by-name'}">
+                        <div class="flex-grow-1"></div>
+                        <div class="switch align-self-center tooltipped" data-tooltip="Опубликовать">
+                            <label>
+                                <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/published/{id}((id=${article.id}))}" method="post" onchange="changeStateCheckbox(this)">
+                                    <input th:if="${article.published}" checked class="switch-input" type="checkbox">
+                                    <input th:unless="${article.published}" class="switch-input" type="checkbox">
+                                    <span class="lever"></span>
+                                    <span class="mt-2">опубликовать</span>
+                                </form>
+                            </label>
+                        </div>
+                        <a th:href="@{/articles/edit/{id}(id=${article.id})}" data-tooltip="Редактировать" class="btn-large btn-floating waves-circle waves-light blue ms-3 tooltipped"><i class="material-icons">edit</i></a>
+                        <a href="#remove-modal" data-tooltip="Удалить" class="btn-large btn-floating waves-circle waves-light red ms-3 tooltipped modal-trigger"><i class="material-icons">delete</i></a>
+                    </th:block>
                 </div>
             </div>
         </div>

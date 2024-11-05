@@ -78,7 +78,7 @@ public class ArticlesController {
                         .sort(pageable.getSort())
                         .queryStaticParams(new String[]{appNamesProps.getSearchFieldName(), searchValue});
 
-        List<Filter> filters = filtering.processing(articlesByUser.getPageable().getSort());
+        List<Filter> filters = filtering.processing(articlesByUser.getPageable().getSort(), List.of("published"));
 
         model.addAttribute("articles", articlesByUser);
         model.addAttribute("searchName", appNamesProps.getSearchFieldName());
@@ -88,6 +88,7 @@ public class ArticlesController {
         model.addAttribute("pageName", appNamesProps.getPageNumberName());
         model.addAttribute("urls", generationUrlPage.generation(parameters));
         model.addAttribute("filters", filters);
+        model.addAttribute("urlSearch", "/articles/search-by-name");
         return "articles/all-articles-by-user";
     }
 

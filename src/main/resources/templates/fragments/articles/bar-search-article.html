@@ -5,11 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<th:block th:fragment="bar-search-article(filters, pageName, sizeName, sortName)">
+<th:block th:fragment="bar-search-article(filters, pageName, sizeName, sortName, urlSearch, searchName, searchValue)">
     <div class="row container">
         <div class="col s3"></div>
         <div class="col s6">
-            <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/search-by-name}" method="get">
+            <form class="d-flex flex-direction-column" action="#" th:action="${urlSearch}" method="get">
                 <div class="card">
                     <div class="card-content d-flex aligns-items-flex-end">
                         <div class="input-field flex-grow-1">
@@ -22,7 +22,7 @@
                             <button type="submit" class="btn-floating waves-effect waves-light"><i class="material-icons">search</i></button>
                         </div>
                     </div>
-                    <div class="card-action">
+                    <div th:if="${urlSearch eq '/articles/search-by-name'}" class="card-action">
                         <a th:text="#{articles.create.article}" class="btn waves-effect waves-light center-align" th:href="@{/articles/create}"></a>
                         <a th:text="#{articles.upload.article}" class="btn waves-effect waves-light center-align" th:href="@{/articles/create/upload}"></a>
                     </div>
