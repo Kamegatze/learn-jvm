@@ -27,6 +27,11 @@ spring:
     always-use-message-format: true
     locale-default: en
 
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
   main:
     allow-bean-definition-overriding: true
 

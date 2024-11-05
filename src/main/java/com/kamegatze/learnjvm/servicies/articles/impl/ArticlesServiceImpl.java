@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -48,7 +48,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Override
     public void save(Article article) {
         transactionTemplate.execute ((status) -> {
-            article.setCreatedAt(Instant.now());
+            article.setCreatedAt(LocalDate.now());
             article.setPublished(false);
             article.setContent(markDownConverter.toHtml(article.getContent()));
             final Posts post = articleMapper.articleToPosts(article);
@@ -160,7 +160,7 @@ public class ArticlesServiceImpl implements ArticlesService {
         postsRepository.findById(article.getId()).ifPresent(posts -> {
             posts.setLabel(article.getLabel());
             posts.setContent(markDownConverter.toHtml(article.getContent()));
-            posts.setUpdatedAt(Instant.now());
+            posts.setUpdatedAt(LocalDate.now());
             postsRepository.save(posts);
         });
     }

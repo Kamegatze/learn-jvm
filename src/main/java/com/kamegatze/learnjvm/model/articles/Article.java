@@ -2,23 +2,23 @@ package com.kamegatze.learnjvm.model.articles;
 
 import com.kamegatze.learnjvm.model.db.users.Users;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Article {
     private UUID id;
     private Users users;
     private String label;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
     private Boolean published;
     private String content;
 
     public Article() {
     }
 
-    public Article(UUID id, Users users, String label, Instant createdAt,
-                   Instant updatedAt, Boolean published, String content) {
+    public Article(UUID id, Users users, String label, LocalDate createdAt,
+                   LocalDate updatedAt, Boolean published, String content) {
         this.id = id;
         this.users = users;
         this.label = label;
@@ -57,19 +57,19 @@ public class Article {
         this.label = label;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -4,7 +4,7 @@ import com.kamegatze.learnjvm.model.db.users.Users;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -13,9 +13,9 @@ public class Posts extends AbstractPersistable<UUID> {
     @Column(name = "label")
     private String label;
     @Column(name = "created_at")
-    private Instant createdAt;
+    private LocalDate createdAt;
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDate updatedAt;
     @Column(name = "published")
     private Boolean published;
     @Column(name = "content")
@@ -27,7 +27,7 @@ public class Posts extends AbstractPersistable<UUID> {
     public Posts() {
     }
 
-    public Posts(UUID id, Users users, String label, Instant createdAt, Instant updatedAt,
+    public Posts(UUID id, Users users, String label, LocalDate createdAt, LocalDate updatedAt,
                  Boolean published, String content) {
         this.setId(id);
         this.users = users;
@@ -54,19 +54,19 @@ public class Posts extends AbstractPersistable<UUID> {
         this.label = label;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
 

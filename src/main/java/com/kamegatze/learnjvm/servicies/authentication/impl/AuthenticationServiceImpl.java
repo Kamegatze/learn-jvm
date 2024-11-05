@@ -11,7 +11,7 @@ import com.kamegatze.learnjvm.servicies.authentication.exceptions.NotEqualsPassw
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Service
@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         final Users users = usersMapper.mapRegistrationToUser(registration);
 
-        users.setCreatedAt(Instant.now());
+        users.setCreatedAt(LocalDate.now());
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         rolesRepository.findByName(ERoles.ROLE_USER).ifPresent(users::setRole);
         return usersRepository.save(users);

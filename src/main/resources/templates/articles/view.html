@@ -15,8 +15,15 @@
                 <div class="col s4 card">
                     <h5 class="center-align" th:utext="${article.label}"></h5>
                     <br>
-                    <div>
+                    <div class="card-content">
                         [(${article.content})]
+                    </div>
+                    <div class="card-action d-flex">
+                        <div class="flex-grow-1"></div>
+                        <div>
+                            <span th:text="#{date.published}"></span>
+                            <span th:text="${': ' + @dateTimeFormatterUtilsImpl.dateTimeOfPattern('dd.MM.yyyy', article.createdAt)}"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col s4"></div>

@@ -78,7 +78,7 @@ public class ArticlesController {
                         .sort(pageable.getSort())
                         .queryStaticParams(new String[]{appNamesProps.getSearchFieldName(), searchValue});
 
-        List<Filter> filters = filtering.processing(articlesByUser.getPageable().getSort(), List.of("published"));
+        List<Filter> filters = filtering.processing(articlesByUser.getPageable().getSort(), List.of());
 
         model.addAttribute("articles", articlesByUser);
         model.addAttribute("searchName", appNamesProps.getSearchFieldName());

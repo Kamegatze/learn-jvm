@@ -6,7 +6,7 @@ import com.kamegatze.learnjvm.model.db.roles.Roles;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,11 +22,11 @@ public class Users extends AbstractPersistable<UUID> {
     @Column(name = "password")
     private String password;
     @Column(name = "created_at")
-    private Instant createdAt;
+    private LocalDate createdAt;
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDate updatedAt;
     @Column(name = "last_authorization")
-    private Instant lastAuthorization;
+    private LocalDate lastAuthorization;
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Roles role;
@@ -40,8 +40,8 @@ public class Users extends AbstractPersistable<UUID> {
     }
 
     public Users(UUID id, String lastName, String firstName, String login,
-                 String password, Instant createdAt, Instant updatedAt,
-                 Instant lastAuthorization, Icons icons, Roles role) {
+                 String password, LocalDate createdAt, LocalDate updatedAt,
+                 LocalDate lastAuthorization, Icons icons, Roles role) {
         this.setId(id);
         this.lastName = lastName;
         this.firstName = firstName;
@@ -110,27 +110,27 @@ public class Users extends AbstractPersistable<UUID> {
         this.password = password;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Instant getLastAuthorization() {
+    public LocalDate getLastAuthorization() {
         return lastAuthorization;
     }
 
-    public void setLastAuthorization(Instant lastAuthorization) {
+    public void setLastAuthorization(LocalDate lastAuthorization) {
         this.lastAuthorization = lastAuthorization;
     }
 }
