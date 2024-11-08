@@ -14,7 +14,7 @@
                 <form class="col s6" action="#" th:action="@{/articles/create/upload}" method="post" enctype="multipart/form-data">
                     <div class="input-field">
                         <input id="label" type="text" class="validate" name="label">
-                        <label for="label">Название статьи</label>
+                        <label for="label" th:text="#{article.load.name}"></label>
                     </div>
                     <div class="file-field input-field">
                         <div class="btn">
@@ -25,7 +25,7 @@
                             <input class="file-path validate" type="text" placeholder="Выберите файл">
                         </div>
                     </div>
-                    <button type="submit" class="btn waves-effect waves-light">Загрузить статью</button>
+                    <button type="submit" class="btn waves-effect waves-light" th:text="#{article.load.upload}"></button>
                 </form>
                 <div class="col s3"></div>
             </div>

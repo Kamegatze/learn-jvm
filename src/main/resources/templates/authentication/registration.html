@@ -15,31 +15,31 @@
                 <div class="row col s12">
                     <div class="input-field col s12">
                         <input id="last_name" class="validate" type="text" th:field="*{lastName}"/>
-                        <label for="last_name" >Фамилия</label>
+                        <label for="last_name" th:text="#{field.registration.last.name}"></label>
                         <span class="helper-text red-text" th:if="${#fields.hasErrors('lastName')}"
                               th:errors="*{lastName}"></span>
                     </div>
                     <div class="input-field col s12">
                         <input id="first_name" class="validate" type="text" th:field="*{firstName}"/>
-                        <label for="first_name">Имя</label>
+                        <label for="first_name" th:text="#{field.registration.first.name}"></label>
                         <span class="helper-text red-text" th:if="${#fields.hasErrors('firstName')}"
                               th:errors="*{firstName}"></span>
                     </div>
                     <div class="input-field col s12">
                         <input id="login" class="validate" type="text" th:field="*{login}"/>
-                        <label for="login">Логин</label>
+                        <label for="login" th:text="#{field.registration.login}"></label>
                         <span class="helper-text red-text" th:if="${#fields.hasErrors('login')}"
                               th:errors="*{login}"></span>
                     </div>
                     <div class="input-field col s12">
                         <input id="password" class="validate" type="password" th:field="*{password}"/>
-                        <label for="password">Пароль</label>
+                        <label for="password" th:text="#{field.registration.password}"></label>
                         <span class="helper-text red-text" th:if="${#fields.hasErrors('password')}"
                               th:errors="*{password}"></span>
                     </div>
                     <div class="input-field col s12">
                         <input id="retry_password" class="validate" type="password" th:field="*{retryPassword}"/>
-                        <label for="retry_password">Повторите пароль</label>
+                        <label for="retry_password" th:text="#{field.registration.password.retry}"></label>
                         <span class="helper-text red-text" th:if="${#fields.hasErrors('retryPassword')}"
                               th:errors="*{retryPassword}"></span>
                         <!--/*@thymesVar id="errorRetryPassword" type="java.lang.String"*/-->
@@ -48,11 +48,11 @@
                     <div class="input-field col s12">
                         <button class="btn waves-effect waves-light" type="submit">
                             <i class="material-icons left">send</i>
-                            Зарегистрироваться
+                            <th:block th:text="#{registration.value}"></th:block>
                         </button>
                         <a class="btn waves-effect waves-light" th:href="@{/authentication/login}">
                             <i class="material-icons left">arrow_back</i>
-                            Назад
+                            <th:block th:text="#{back.value}"></th:block>
                         </a>
                     </div>
                 </div>

@@ -11,30 +11,63 @@
             <a th:href="@{/main/home}" class="brand-logo">The Study King</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a th:href="@{/main/home}">Home</a></li>
-                <li><a th:href="@{/main/articles?page=0&size=5}">Articles</a></li>
-                <li><a th:href="@{/main/courses}">Courses</a></li>
-                <li><a href="#" class="dropdown-trigger btn-floating grey" data-target="account-dropdown"><i class="material-icons">account_circle</i></a></li>
+                <li><a th:text="#{name.main.page}" th:href="@{/main/home}"></a></li>
+                <li><a th:text="#{name.articles.page}" th:href="@{/main/articles?page=0&size=5}"></a></li>
+                <li><a th:text="#{name.courses.page}" th:href="@{/main/courses}"></a></li>
+                <li th:if="${user != null}"><a onclick="customOpenSideNav('account-dropdown-sidenav')" href="#" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
+                <li th:unless="${user != null}"><a  th:href="@{/authentication/login}" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
             </ul>
         </div>
     </nav>
 
-    <ul id="account-dropdown" class="dropdown-content">
-        <li><a th:href="@{/account/page_info}">account</a></li>
-        <li><a th:href="@{/articles/all-articles-by-user?page=0&size=5}">my articles</a> </li>
+
+    <ul id="account-dropdown-sidenav" class="sidenav">
         <li>
-            <form th:action="@{/logout}" method="post">
-                <button class="left-align button-merges-background w-100" type="submit">exit</button>
+            <div class="user-view">
+                <div class="background">
+                    <img th:src="@{/static/image/backgrounds/blue-concrete-textured-wall.jpg}" alt="">
+                </div>
+                <a href="#user"><i class="circle material-icons" >account_circle</i></a>
+                <div class="d-flex flex-direction-column justify-content-end">
+                    <div class="flex-grow-1"></div>
+                    <div th:if="${user != null}" href="#name"><span class="white-text"><th:block th:text="${user.login}"></th:block></span></div>
+                    <div th:if="${user != null}" href="#name"><span class="white-text"><th:block th:text="${user.firstName + ' ' + user.lastName}"></th:block></span></div>
+                    <div href="#email"><span class="white-text">jdandturk@gmail.com</span></div>
+                </div>
+            </div>
+        </li>
+        <li><a th:text="#{name.account.page}" th:href="@{/account/page_info}"></a></li>
+        <li><a th:text="#{name.my.articles.page}" th:href="@{/articles/all-articles-by-user?page=0&size=5}"></a> </li>
+        <li><a th:text="#{name.action.exit}" href="javascript: document.logoutForm.submit()"></a>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                <button th:text="#{name.action.exit}" class="left-align button-merges-background w-100" type="submit"></button>
             </form>
         </li>
     </ul>
 
 
     <ul class="sidenav" id="mobile-demo">
-        <li><a th:href="@{/main/home}">Home</a></li>
-        <li><a th:href="@{/main/articles}">Articles</a></li>
-        <li><a th:href="@{/main/courses}">Courses</a></li>
-        <li><a th:href="@{/account/page_info}">Account</a></li>
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img th:src="@{/static/image/backgrounds/blue-concrete-textured-wall.jpg}" alt="">
+                </div>
+                <a href="#user"><i class="circle material-icons" >account_circle</i></a>
+                <a href="#name"><span class="white-text name">John Doe</span></a>
+                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            </div>
+        </li>
+        <li><a th:text="#{name.account.page}" th:href="@{/account/page_info}"></a></li>
+        <li><a th:text="#{name.my.articles.page}" th:href="@{/articles/all-articles-by-user?page=0&size=5}"></a> </li>
+        <li><a th:text="#{name.action.exit}" href="javascript: document.logoutFormMobile.submit()"></a>
+            <form name="logoutFormMobile" th:action="@{/logout}" method="post" th:hidden="true">
+                <button th:text="#{name.action.exit}" class="left-align button-merges-background w-100" type="submit"></button>
+            </form>
+        </li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a th:text="#{name.main.page}" th:href="@{/main/home}"></a></li>
+        <li><a th:text="#{name.articles.page}" th:href="@{/main/articles}">Articles</a></li>
+        <li><a th:text="#{name.courses.page}" th:href="@{/main/courses}">Courses</a></li>
     </ul>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -42,6 +75,17 @@
             const element = document.querySelectorAll('.dropdown-trigger')
             const instances = M.Dropdown.init(element)
         });
+
+        const customOpenSideNav = (id) => {
+            const sidenav = document.getElementById(id);
+            const instance = M.Sidenav.init(sidenav);
+            if (instance.isOpen) {
+                instance.close();
+            } else {
+                instance.open();
+            }
+        };
+
     </script>
 </th:block>
 </body>

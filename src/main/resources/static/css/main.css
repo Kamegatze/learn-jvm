@@ -31,6 +31,10 @@
     justify-content: center;
 }
 
+.justify-content-end {
+    justify-content: flex-end;
+}
+
 .aligns-items-center {
     align-items: center;
 }
@@ -49,6 +53,10 @@
 
 .dropdown-content {
     min-width: 130px;
+}
+
+.sidenav li {
+    line-height: 20px;
 }
 
 .dropdown-content li > a, .dropdown-content li > span, .dropdown-content li > form > button {

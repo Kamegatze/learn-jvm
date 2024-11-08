@@ -1,7 +1,9 @@
 package com.kamegatze.learnjvm.controllers.home;
 
 import com.kamegatze.learnjvm.configuration.props.app.AppNamesProps;
+import com.kamegatze.learnjvm.configuration.security.details.UserDetails;
 import com.kamegatze.learnjvm.model.articles.Article;
+import com.kamegatze.learnjvm.model.db.users.Users;
 import com.kamegatze.learnjvm.model.filtering.Filter;
 import com.kamegatze.learnjvm.model.generation.url.Parameters;
 import com.kamegatze.learnjvm.servicies.articles.ArticlesService;
@@ -10,6 +12,7 @@ import com.kamegatze.learnjvm.utils.GenerationUrlPage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +43,15 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    String handlingHomePage() {return "home";}
+    String handlingHomePage(Authentication authentication, Model model) {
+        if (Objects.isNull(authentication)) {
+            model.addAttribute("user", null);
+        } else {
+            final Users user = ((UserDetails)authentication.getPrincipal()).getUser();
+            model.addAttribute("user", user);
+        }
+        return "home";
+    }
 
     @GetMapping("/articles")
     String handlingArticles(Model model, Pageable pageable, @RequestParam(value = "#{appNamesProps.searchFieldName}", required = false) String searchValue) {

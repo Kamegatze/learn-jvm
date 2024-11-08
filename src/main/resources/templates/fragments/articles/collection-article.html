@@ -16,21 +16,21 @@
                     <p class="truncate-text transfer-word" data-count-line="8" th:text="${@htmlConvectorImpl.toFirstAttributeToText('p', article.content)}"></p>
                 </div>
                 <div class="card-action d-flex">
-                    <a class="btn waves-effect waves-light tooltipped" data-tooltip="Подробнее" th:href="@{/articles/view/{id}(id=${article.id})}">Подробнее</a>
+                    <a th:text="#{button.more.detailed}" class="btn waves-effect waves-light tooltipped" th:data-tooltip="#{button.more.detailed}" th:href="@{/articles/view/{id}(id=${article.id})}"></a>
                     <th:block th:if="${urlSearch eq '/articles/search-by-name'}">
                         <div class="flex-grow-1"></div>
-                        <div class="switch align-self-center tooltipped" data-tooltip="Опубликовать">
+                        <div class="switch align-self-center tooltipped" th:data-tooltip="#{button.published.with.capital.letter}">
                             <label>
                                 <form class="d-flex flex-direction-column" action="#" th:action="@{/articles/published/{id}((id=${article.id}))}" method="post" onchange="changeStateCheckbox(this)">
                                     <input th:if="${article.published}" checked class="switch-input" type="checkbox">
                                     <input th:unless="${article.published}" class="switch-input" type="checkbox">
                                     <span class="lever"></span>
-                                    <span class="mt-2">опубликовать</span>
+                                    <span th:text="#{button.published}" class="mt-2"></span>
                                 </form>
                             </label>
                         </div>
-                        <a th:href="@{/articles/edit/{id}(id=${article.id})}" data-tooltip="Редактировать" class="btn-large btn-floating waves-circle waves-light blue ms-3 tooltipped"><i class="material-icons">edit</i></a>
-                        <a href="#remove-modal" data-tooltip="Удалить" class="btn-large btn-floating waves-circle waves-light red ms-3 tooltipped modal-trigger"><i class="material-icons">delete</i></a>
+                        <a th:href="@{/articles/edit/{id}(id=${article.id})}" th:data-tooltip="#{button.editor}" class="btn-large btn-floating waves-circle waves-light blue ms-3 tooltipped"><i class="material-icons">edit</i></a>
+                        <a href="#remove-modal" th:data-tooltip="#{button.delete}" class="btn-large btn-floating waves-circle waves-light red ms-3 tooltipped modal-trigger"><i class="material-icons">delete</i></a>
                     </th:block>
                 </div>
             </div>
@@ -38,11 +38,11 @@
         <div class="col s3"></div>
         <div id="remove-modal" class="modal" style="width: 30%">
             <div class="modal-content">
-                <p>Вы уверены что хотите удалить?</p>
+                <p th:text="#{delete.question}"></p>
             </div>
             <div class="modal-footer">
                 <form action="#" th:action="@{/articles/delete/{id}(id=${article.id})}" method="post">
-                    <button type="submit" class="btn-small waves-effect waves-light red lighten-1"><i class="material-icons left">delete</i>Удалить</button>
+                    <button type="submit" class="btn-small waves-effect waves-light red lighten-1"><i class="material-icons left">delete</i><th:block th:text="#{button.delete}"></th:block></button>
                 </form>
             </div>
         </div>

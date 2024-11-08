@@ -11,10 +11,10 @@
         <div class="col s6">
             <div class="card">
                 <div class="card-image">
-                    <img th:src="@{/static/image/images/not-found.png}" alt="404" height="300px" width="600px">
+                    <img th:src="@{/static/image/images/not-found.png}" alt="404" height="300px" width="600px" src="">
                 </div>
                 <div class="card-content">
-                    <p>Not found articles...</p>
+                    <p th:text="#{error.message.not.found.articles}"></p>
                 </div>
             </div>
         </div>
