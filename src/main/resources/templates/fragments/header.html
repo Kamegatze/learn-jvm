@@ -14,8 +14,8 @@
                 <li><a th:text="#{name.main.page}" th:href="@{/main/home}"></a></li>
                 <li><a th:text="#{name.articles.page}" th:href="@{/main/articles?page=0&size=5}"></a></li>
                 <li><a th:text="#{name.courses.page}" th:href="@{/main/courses}"></a></li>
-                <li th:if="${user != null}"><a onclick="customOpenSideNav('account-dropdown-sidenav')" href="#" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
-                <li th:unless="${user != null}"><a  th:href="@{/authentication/login}" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
+                <li th:if="${user.isPresent()}"><a onclick="customOpenSideNav('account-dropdown-sidenav')" href="#" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
+                <li th:unless="${user.isPresent()}"><a th:href="@{/authentication/login}" class="btn btn-floating grey" data-target="account-dropdown-sidenav"><i class="material-icons">account_circle</i></a></li>
             </ul>
         </div>
     </nav>
@@ -30,8 +30,8 @@
                 <a href="#user"><i class="circle material-icons" >account_circle</i></a>
                 <div class="d-flex flex-direction-column justify-content-end">
                     <div class="flex-grow-1"></div>
-                    <div th:if="${user != null}" href="#name"><span class="white-text"><th:block th:text="${user.login}"></th:block></span></div>
-                    <div th:if="${user != null}" href="#name"><span class="white-text"><th:block th:text="${user.firstName + ' ' + user.lastName}"></th:block></span></div>
+                    <div th:if="${user.isPresent()}" href="#name"><span class="white-text"><th:block th:text="${user.get().login}"></th:block></span></div>
+                    <div th:if="${user.isPresent()}" href="#name"><span class="white-text"><th:block th:text="${user.get().firstName + ' ' + user.get().lastName}"></th:block></span></div>
                     <div href="#email"><span class="white-text">jdandturk@gmail.com</span></div>
                 </div>
             </div>

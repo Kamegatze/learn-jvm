@@ -43,20 +43,12 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    String handlingHomePage(Authentication authentication, Model model) {
-        if (Objects.isNull(authentication)) {
-            model.addAttribute("user", null);
-        } else {
-            final Users user = ((UserDetails)authentication.getPrincipal()).getUser();
-            model.addAttribute("user", user);
-        }
-        return "home";
-    }
+    String handlingHomePage() {return "home";}
 
     @GetMapping("/articles")
     String handlingArticles(Model model, Pageable pageable, @RequestParam(value = "#{appNamesProps.searchFieldName}", required = false) String searchValue) {
 
-        Page<Article> articlesViaPageable = Objects.isNull(searchValue) || searchValue.isEmpty() || searchValue.isBlank() ?
+        Page<Article> articlesViaPageable = Objects.isNull(searchValue) || searchValue.isBlank() ?
                 articlesService.findAllByPublished(true, pageable) : articlesService.findAllByArticleAndPublished(pageable, searchValue, true);
 
         articlesViaPageable = new PageImpl<>(articlesViaPageable.filter(Article::getPublished).toList(), articlesViaPageable.getPageable(), articlesViaPageable.getTotalElements());
